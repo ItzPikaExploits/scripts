@@ -458,13 +458,17 @@ function sheerheartattack()
 end;
 local u58 = false;
 
-local Pose1 = Instance.new("Animation", Humanoid)
+local Pose1 = Instance.new("Animation", l__Humanoid__7)
 Pose1.AnimationId = "rbxassetid://5791704895"
-local Pose2 = Instance.new("Animation", Humanoid)
+local Pose2 = Instance.new("Animation", l__Humanoid__7)
 Pose2.AnimationId = "rbxassetid://5791676263"
+local CounterPose = Instance.new("Animation", l__Humanoid__7)
+CounterPose.AnimationId = "rbxassetid://5791659791"
+local cPoseAnim = l__Humanoid__7:LoadAnimation(CounterPose)
 
 local u59 = l__Humanoid__7:LoadAnimation(Pose1);
 local u60 = l__Humanoid__7:LoadAnimation(Pose2);
+
 local l__Menacing__61 = l__ReplicatedStorage__1.Menacing;
 function posefunc()
 	if u1 == false then
@@ -682,6 +686,9 @@ mouse.KeyDown:connect(function(p4)
 		l__StandAppear__6:Play();
 		l__Character__6.HumanoidRootPart.CFrame = CFrame.new(mouse.Hit.p + Vector3.new(0, 3, 0));
 		game.ReplicatedStorage.Taunt:FireServer(l__Character__6.Head, "rbxassetid://4845894614", 10, 1, 0)
+		cPoseAnim:Play(0, 1, 1)
+		wait(0.1)
+		cPoseAnim:Stop(0.3)
 	end;
 	if p4 == "g" then
 		posefunc();
