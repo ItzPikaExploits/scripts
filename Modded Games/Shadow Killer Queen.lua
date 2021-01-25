@@ -768,7 +768,7 @@ function hito(p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17)
 	end;
 end;
 local l__Damage14__67 = l__ReplicatedStorage__1.Damage14;
-function hito2(p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30)
+function hito2(p18, p19, p20, ...)
 	if l__Disabled__18.Value == true then
 		return;
 	end;
@@ -790,7 +790,7 @@ function hito2(p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30)
 							u45 = l__HumanoidRootPart__51.CFrame;
 							u46 = l__Humanoid__7.Health;
 							u47 = l__Humanoid__50.Health;
-							l__Damage14__67:FireServer(l__Humanoid__50, p19, p21);
+							l__Damage14__67:FireServer(l__Humanoid__50, p19, ...);
 							local v52 = Instance.new("StringValue");
 							v52.Name = "alabo";
 							v52.Parent = l__HumanoidRootPart__51;
