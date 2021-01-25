@@ -242,8 +242,9 @@ local u31 = nil;
 local l__HeavyPunch__32 = l__StandHumanoidRootPart__10.HeavyPunch;
 local l__PrimaryBomb__33 = l__StandHumanoidRootPart__10.PrimaryBomb;
 local u34 = l__Humanoid__7:LoadAnimation(l__StandHumanoidRootPart__10.StrongPunch);
+local BombTarget;
 function bomb()
-	if l__Character__6.Bomb.Value == true then
+	if (BombTarget) then
 		return;
 	end;
 	u1 = true;
@@ -288,7 +289,7 @@ local u35 = l__Humanoid__7:LoadAnimation(l__StandHumanoidRootPart__10.Detonate);
 local l__Bomb__36 = l__StandHumanoidRootPart__10.Bomb;
 local l__BombDamage__37 = l__ReplicatedStorage__1.BombDamage;
 function detonate()
-	if l__Character__6.Bomb.Value == false then
+	if (not BombTarget) then
 		return;
 	end;
 	u1 = true;
@@ -297,6 +298,7 @@ function detonate()
 	wait(0.5);
 	standappear(false)
 	l__Bomb__36:Play();
+	BombTarget = nil;
 	l__Damage__66:FireServer(l__Character__6.Target.Value.Humanoid, nil, 999999);
 	u1 = false;
 end;
@@ -305,7 +307,7 @@ local u39 = false;
 local l__TertiaryBomb__40 = l__StandHumanoidRootPart__10.TertiaryBomb;
 local u41 = 0;
 function btd()
-	if l__Character__6.Bomb.Value == true then
+	if (BombTarget) then
 		return;
 	end;
 	u1 = true;
@@ -363,7 +365,7 @@ local u45 = nil;
 local u46 = nil;
 local u47 = nil;
 function detonatebtd()
-	if l__Character__6.Bomb.Value == false then
+	if (not BombTarget) then
 		return;
 	end;
 	u1 = true;
@@ -375,6 +377,7 @@ function detonatebtd()
 	l__BitesZaDusto__42:Play();
 	l__Bomb__36:Play();
 	game.ReplicatedStorage.DoppioSlam:FireServer()
+	BombTarget = nil;
 	hito(l__Stand_Right_Arm__11, CFrame.new(), 70, 999999, 0, 0.25, Vector3.new(0, 100, 0), "rbxassetid://241837157", 0.075, Color3.new(255, 255, 255), "rbxassetid://260430079", math.random(9, 11) / 10, math.random(9, 11) / 50);
 	--l__BTDDamage__43:FireServer(65, u44, u45, u46, u47, u41);
 	u1 = false;
@@ -382,7 +385,7 @@ end;
 local u48 = false;
 local l__Coin__49 = l__ReplicatedStorage__1.Coin;
 function cointhrow()
-	if l__Character__6.Bomb.Value == true then
+	if (BombTarget) then
 		return;
 	end;
 	u48 = true;
@@ -645,9 +648,9 @@ mouse.KeyDown:connect(function(p4)
 		barrage();
 	end;
 	if p4 == "r" then
-		if l__Character__6.Bomb.Value == false then
+		if (not BombTarget) then
 			bomb();
-		elseif l__Character__6.Bomb.Value == true and u31 == true then
+		elseif (BombTarget) and u31 == true then
 			detonate();
 		end;
 	end;
@@ -666,7 +669,7 @@ mouse.KeyDown:connect(function(p4)
 		cointhrow();
 	end;
 	if p4 == "f" then
-		if l__Character__6.Bomb.Value == false then
+		if (not BombTarget) then
 			btd()
 		else
 			detonatebtd()
@@ -777,6 +780,7 @@ function hito2(partoz, partcfr, magn, dmg, debtim, debtime, bodyfdire, effect, g
 				if partoz.Anchored then return end
 				local humz = guy:FindFirstChild("Humanoid")
 				local horp = guy:FindFirstChild("HumanoidRootPart")
+				BombTarget = guy;
 				l__Damage14__67:FireServer(humz, partcfr, dmg, debtime, bodyfdire, effect, grow, color, sound, pitch, volume)
 				local db = Instance.new("StringValue")
 				db.Name = "alabo"
@@ -792,6 +796,7 @@ function hito2(partoz, partcfr, magn, dmg, debtim, debtime, bodyfdire, effect, g
 				if partoz.Anchored then return end
 				local humz = guy:FindFirstChild("Humanoid")
 				local horp = guy:FindFirstChild("HumanoidRootPart")
+				BombTarget = guy;
 				l__Damage14__67:FireServer(humz, partcfr, dmg, debtime, bodyfdire, effect, grow, color, sound, pitch, volume)
 				local db = Instance.new("StringValue")
 				db.Name = "alabo"
