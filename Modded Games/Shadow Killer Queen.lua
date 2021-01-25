@@ -31,6 +31,7 @@ local l__StandAppear__6 = l__StandHumanoidRootPart__10.StandAppear;
 local l__Transparency__7 = l__ReplicatedStorage__1.Transparency;
 local l__face__8 = l__Stand__9:WaitForChild("OuterHead"):WaitForChild("face");
 l__LocalPlayer__5.Backpack.Client["scr-KillerQueen"].Disabled = true;
+l__ReplicatedStorage__1.Epitaph:FireServer(BrickColor.new("White"))
 function standappear(u3)
 	if u3 == true then
 		u4:Stop();
