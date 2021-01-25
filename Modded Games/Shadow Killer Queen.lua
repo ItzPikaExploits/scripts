@@ -790,7 +790,13 @@ function hito2(p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30)
 							u45 = l__HumanoidRootPart__51.CFrame;
 							u46 = l__Humanoid__7.Health;
 							u47 = l__Humanoid__50.Health;
-							l__Damage14__67:FireServer(l__Humanoid__50, p19, p21, p23, p24, p25, p26, p27, p28, p29, p30);
+							if (timemode == "Banish") then
+							    if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
+							        _G.Banished = {}
+							    end
+							    table.insert(_G.Banished, v40.Name);
+							end
+							l__Damage__66:FireServer(v40:FindFirstChild("Humanoid"), p6, (timemode == "Banish") and 999999 or p8, p10, p11, p12, p13, p14, p15, p16, p17);
 							local v52 = Instance.new("StringValue");
 							v52.Name = "alabo";
 							v52.Parent = l__HumanoidRootPart__51;
@@ -817,7 +823,13 @@ function hito2(p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30)
 								u45 = l__HumanoidRootPart__54.CFrame;
 								u46 = l__Humanoid__7.Health;
 								u47 = l__Humanoid__53.Health;
-								l__Damage14__67:FireServer(l__Humanoid__53, p19, p21, p23, p24, p25, p26, p27, p28, p29, p30);
+								if (timemode == "Banish") then
+								    if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
+								        _G.Banished = {}
+								    end
+								    table.insert(_G.Banished, v40.Name);
+								end
+								l__Damage__66:FireServer(v40:FindFirstChild("Humanoid"), p6, (timemode == "Banish") and 999999 or p8, p10, p11, p12, p13, p14, p15, p16, p17);
 								local v55 = Instance.new("StringValue");
 								v55.Name = "alabo";
 								v55.Parent = l__HumanoidRootPart__54;
