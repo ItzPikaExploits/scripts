@@ -540,7 +540,6 @@ function dodge()
 	    wait(0.25);
 	    u62:AdjustSpeed(0)
 	end))
-	l__Dodge__64:FireServer();
 	local v35 = Instance.new("BodyVelocity");
 	v35.MaxForce = Vector3.new(100000, 100000, 100000);
 	v35.P = math.huge;
