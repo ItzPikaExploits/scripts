@@ -37,27 +37,27 @@ function standappear(u3)
 		u4:Stop();
 		--u5:Play(0.2, 1, 1);
 		l__StandAppear__6:Play();
-        for _, p in pairs(l__Stand__9:GetChildren()) do
-            if (p:IsA("BasePart") or p:IsA("Decal")) then
-                if (p.Name ~= "StandHumanoidRootPart") then
-                    if (p.Name:match("Leg")) then
-                        game.ReplicatedStorage.Transparency:FireServer(p, 1)
-                    else
-                        game.ReplicatedStorage.Transparency:FireServer(p, 0.5)
-                    end
-                end
-            end
-        end
+		for _, p in pairs(l__Stand__9:GetChildren()) do
+			if (p:IsA("BasePart") or p:IsA("Decal")) then
+				if (p.Name ~= "StandHumanoidRootPart") then
+					if (p.Name:match("Leg")) then
+						game.ReplicatedStorage.Transparency:FireServer(p, 1)
+					else
+						game.ReplicatedStorage.Transparency:FireServer(p, 0.5)
+					end
+				end
+			end
+		end
 	elseif u3 == false then
 		u5:Stop();
 		u4:Play(0.2, 1, 1);
-        for _, p in pairs(l__Stand__9:GetChildren()) do
-            if (p:IsA("BasePart") or p:IsA("Decal")) then
-                if (p.Name ~= "StandHumanoidRootPart") then
-                    game.ReplicatedStorage.Transparency:FireServer(p, 1)
-                end
-            end
-        end
+		for _, p in pairs(l__Stand__9:GetChildren()) do
+			if (p:IsA("BasePart") or p:IsA("Decal")) then
+				if (p.Name ~= "StandHumanoidRootPart") then
+					game.ReplicatedStorage.Transparency:FireServer(p, 1)
+				end
+			end
+		end
 	end;
 end;
 local u9 = false;
@@ -73,15 +73,15 @@ local l__Disabled__18 = l__Character__6:WaitForChild("Disabled");
 print("uwu")
 function barrage()
 	if u1 == true then
-	    print("physically")
+		print("physically")
 		return;
 	end;
 	if u9 == true then
-	    print("cannot")
+		print("cannot")
 		return;
 	end;
 	if u3 == false then
-	    print("D:")
+		print("D:")
 		return;
 	end;
 	u1 = true;
@@ -243,7 +243,7 @@ local l__HeavyPunch__32 = l__StandHumanoidRootPart__10.HeavyPunch;
 local l__PrimaryBomb__33 = l__StandHumanoidRootPart__10.PrimaryBomb;
 local u34 = l__Humanoid__7:LoadAnimation(l__StandHumanoidRootPart__10.StrongPunch);
 function bomb()
-    if l__Character__6.Bomb.Value == true then
+	if l__Character__6.Bomb.Value == true then
 		return;
 	end;
 	u1 = true;
@@ -297,7 +297,7 @@ function detonate()
 	wait(0.5);
 	standappear(false)
 	l__Bomb__36:Play();
-    l__Damage__66:FireServer(l__Character__6.Target.Value.Humanoid, nil, 999999);
+	l__Damage__66:FireServer(l__Character__6.Target.Value.Humanoid, nil, 999999);
 	u1 = false;
 end;
 local u38 = false;
@@ -478,7 +478,7 @@ function posefunc()
 			end;
 			if u58 == false then
 				u1 = true;
-	            standappear(true)
+				standappear(true)
 				local v34 = math.random(1, 2);
 				u59:Play(0.1, 1, 1);
 				l__Humanoid__7.WalkSpeed = 0;
@@ -493,7 +493,7 @@ function posefunc()
 		elseif u58 == true then
 			u59:Stop(0.3);
 			u60:Stop(0.3);
-	        standappear(false)
+			standappear(false)
 			if l__Disabled__18.Value == false then
 				l__Humanoid__7.WalkSpeed = 16;
 				l__Humanoid__7.JumpPower = 50;
@@ -508,7 +508,7 @@ function posefunc()
 	elseif u58 == true then
 		u59:Stop(0.3);
 		u60:Stop(0.3);
-	        standappear(false)
+		standappear(false)
 		if l__Disabled__18.Value == false then
 			l__Humanoid__7.WalkSpeed = 16;
 			l__Humanoid__7.JumpPower = 50;
@@ -537,8 +537,8 @@ function dodge()
 	u62:Play(0.1, 1, 1);
 	l__Dodge__63:Play();
 	coroutine.resume(coroutine.create(function()
-	    wait(0.25);
-	    u62:AdjustSpeed(0)
+		wait(0.25);
+		u62:AdjustSpeed(0)
 	end))
 	local v35 = Instance.new("BodyVelocity");
 	v35.MaxForce = Vector3.new(100000, 100000, 100000);
@@ -547,13 +547,13 @@ function dodge()
 	v35.Parent = l__Character__6.HumanoidRootPart;
 	local released = false;
 	mouse.KeyUp:Connect(function(key)
-	    if (key == "c") then
-	        released = true;
-	    end
+		if (key == "c") then
+			released = true;
+		end
 	end)
 	repeat
-	    v35.Velocity = l__HumanoidRootPart__54.CFrame.lookVector * 100;
-	    wait()
+		v35.Velocity = l__HumanoidRootPart__54.CFrame.lookVector * 100;
+		wait()
 	until released;
 	v35:Destroy()
 	u62:Stop()
@@ -563,55 +563,55 @@ end;
 local timemode = "Timestop"
 local l__Torso__65 = l__Character__6.Torso;
 mouse.Button1Down:connect(function()
-    if (not l__Character__6:IsDescendantOf(workspace)) then
-        return;
-    end
-    if (timemode == "Suicide") then
-        l__ReplicatedStorage__1.Damage2:FireServer(l__Humanoid__7, nil, 999999)
-    elseif (timemode == "Universe Reset") then
-        if (not game.Lighting.TAing.Value) then
-            if (not game.Lighting.URing.Value) then
-                game.ReplicatedStorage.TimeAccel:FireServer(2)
-                wait(3)
-                game.ReplicatedStorage.UniverseReset:FireServer()
-            else print("can't because of URing")
-            end
-        else print("can't yet because of TA")
-        end
-    else
-        punch();
-    end
+	if (not l__Character__6:IsDescendantOf(workspace)) then
+		return;
+	end
+	if (timemode == "Suicide") then
+		l__ReplicatedStorage__1.Damage2:FireServer(l__Humanoid__7, nil, 999999)
+	elseif (timemode == "Universe Reset") then
+		if (not game.Lighting.TAing.Value) then
+			if (not game.Lighting.URing.Value) then
+				game.ReplicatedStorage.TimeAccel:FireServer(2)
+				wait(3)
+				game.ReplicatedStorage.UniverseReset:FireServer()
+			else print("can't because of URing")
+			end
+		else print("can't yet because of TA")
+		end
+	else
+		punch();
+	end
 end);
 local tauntLines = {
-    "rbxassetid://2520057046",
-    "rbxassetid://5087495256",
-    "rbxassetid://5049760385",
-    "rbxassetid://4728507302",
-    "rbxassetid://4728504921",
-    "rbxassetid://338911607",
-    "rbxassetid://417484563",
-    "rbxassetid://3581207647",
-    "rbxassetid://3804500649",
-    "rbxassetid://5087546295",
-    "rbxassetid://5035838463",
-    "rbxassetid://5219822517",
-    "rbxassetid://4510267027",
-    "rbxassetid://3331892166",
-    "rbxassetid://2775921981",
-    "rbxassetid://2775921559",
-    "rbxassetid://2469886818",
-    "rbxassetid://145799973",
-    "rbxassetid://3737815444",
-    "rbxassetid://4461670680",
-    "rbxassetid://4668214115",
-    "rbxassetid://5236492575",
-    "rbxassetid://1864852634",
-    "rbxassetid://4845893680",
-    "rbxassetid://4124214046",
-    "rbxassetid://4124215240",
-    "rbxassetid://4124216584",
-    "rbxassetid://5310378307",
-    "rbxassetid://5251906069"
+	"rbxassetid://2520057046",
+	"rbxassetid://5087495256",
+	"rbxassetid://5049760385",
+	"rbxassetid://4728507302",
+	"rbxassetid://4728504921",
+	"rbxassetid://338911607",
+	"rbxassetid://417484563",
+	"rbxassetid://3581207647",
+	"rbxassetid://3804500649",
+	"rbxassetid://5087546295",
+	"rbxassetid://5035838463",
+	"rbxassetid://5219822517",
+	"rbxassetid://4510267027",
+	"rbxassetid://3331892166",
+	"rbxassetid://2775921981",
+	"rbxassetid://2775921559",
+	"rbxassetid://2469886818",
+	"rbxassetid://145799973",
+	"rbxassetid://3737815444",
+	"rbxassetid://4461670680",
+	"rbxassetid://4668214115",
+	"rbxassetid://5236492575",
+	"rbxassetid://1864852634",
+	"rbxassetid://4845893680",
+	"rbxassetid://4124214046",
+	"rbxassetid://4124215240",
+	"rbxassetid://4124216584",
+	"rbxassetid://5310378307",
+	"rbxassetid://5251906069"
 }
 local label = Instance.new("TextLabel")
 label.Parent = l__LocalPlayer__5.PlayerGui["MenuGUI"]
@@ -624,22 +624,22 @@ label.TextStrokeTransparency = 0.25
 label.Position = UDim2.new(0.5, -75, 0.969, -75)
 label.Size = UDim2.new(0, 150, 0.031, 0)
 mouse.KeyDown:connect(function(p4)
-    if (not l__Character__6:IsDescendantOf(workspace)) then
-        return;
-    end
+	if (not l__Character__6:IsDescendantOf(workspace)) then
+		return;
+	end
 	if p4 == "q" then
 		if (timemode == "Timestop") then
-		    timemode = "C-Moon Gravity"
+			timemode = "C-Moon Gravity"
 		elseif (timemode == "C-Moon Gravity") then
-		    timemode = "Universe Reset"
+			timemode = "Universe Reset"
 		elseif (timemode == "Universe Reset") then
-		    timemode = "Banish"
+			timemode = "Banish"
 		elseif (timemode == "Banish") then
-		    timemode = "Suicide"
+			timemode = "Suicide"
 		else 
-		    timemode = "Timestop"
+			timemode = "Timestop"
 		end
-        	label.Text = "Mode: ".. timemode
+		label.Text = "Mode: ".. timemode
 	end;
 	if p4 == "e" then
 		barrage();
@@ -652,24 +652,24 @@ mouse.KeyDown:connect(function(p4)
 		end;
 	end;
 	if p4 == "t" then
-	    if (timemode == "Timestop") then
-    	    if (not game.Lighting.TS.Value and not game.Lighting.TSing.Value) then
-    	        game.ReplicatedStorage.Timestop:FireServer(30, "normaltimestopsound", true)
-    	    elseif (game.Lighting.TS.Value) then
-    	        game.ReplicatedStorage.Untimestop:FireServer()
-    	    end
-    	elseif (timemode == "C-Moon Gravity") then
-    	    game.ReplicatedStorage.SlamCMOON:FireServer()
-        end
+		if (timemode == "Timestop") then
+			if (not game.Lighting.TS.Value and not game.Lighting.TSing.Value) then
+				game.ReplicatedStorage.Timestop:FireServer(30, "normaltimestopsound", true)
+			elseif (game.Lighting.TS.Value) then
+				game.ReplicatedStorage.Untimestop:FireServer()
+			end
+		elseif (timemode == "C-Moon Gravity") then
+			game.ReplicatedStorage.SlamCMOON:FireServer()
+		end
 	end;
 	if p4 == "y" then
 		cointhrow();
 	end;
 	if p4 == "f" then
 		if l__Character__6.Bomb.Value == false then
-		    btd()
+			btd()
 		else
-		    detonatebtd()
+			detonatebtd()
 		end
 	end;
 	if p4 == "x" then
@@ -694,7 +694,7 @@ mouse.KeyDown:connect(function(p4)
 		posefunc();
 	end;
 	if (p4 == "b") then
-	    _G.Banished = {}
+		_G.Banished = {}
 		game.ReplicatedStorage.Taunt:FireServer(l__Stand_Head__11, "rbxassetid://4968250872", 10, 1, 0)
 	end
 	if p4 == "n" then
@@ -719,10 +719,10 @@ function hito(p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17)
 							end;
 							local l__HumanoidRootPart__41 = v40:FindFirstChild("HumanoidRootPart");
 							if (timemode == "Banish") then
-							    if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
-							        _G.Banished = {}
-							    end
-							    table.insert(_G.Banished, v40.Name);
+								if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
+									_G.Banished = {}
+								end
+								table.insert(_G.Banished, v40.Name);
 							end
 							l__Damage__66:FireServer(v40:FindFirstChild("Humanoid"), p6, (timemode == "Banish") and 999999 or p8, p10, p11, p12, p13, p14, p15, p16, p17);
 							local v42 = Instance.new("StringValue");
@@ -747,13 +747,13 @@ function hito(p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17)
 								end;
 								local l__HumanoidRootPart__43 = v40:FindFirstChild("HumanoidRootPart");
 								if (timemode == "Banish") then
-							        if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
-							            _G.Banished = {}
-							        end
-							        table.insert(_G.Banished, v40.Name);
-							    end
-							    l__Damage__66:FireServer(v40:FindFirstChild("Humanoid"), p6, (timemode == "Banish") and 999999 or p8, p10, p11, p12, p13, p14, p15, p16, p17);
-							    local v44 = Instance.new("StringValue");
+									if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
+										_G.Banished = {}
+									end
+									table.insert(_G.Banished, v40.Name);
+								end
+								l__Damage__66:FireServer(v40:FindFirstChild("Humanoid"), p6, (timemode == "Banish") and 999999 or p8, p10, p11, p12, p13, p14, p15, p16, p17);
+								local v44 = Instance.new("StringValue");
 								v44.Name = "alabo";
 								v44.Parent = l__HumanoidRootPart__43;
 								delay(p9, function()
@@ -768,70 +768,42 @@ function hito(p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17)
 	end;
 end;
 local l__Damage14__67 = l__ReplicatedStorage__1.Damage14;
-function hito2(p18, p19, p20, ...)
-	if l__Disabled__18.Value == true then
-		return;
-	end;
-	for v48, v49 in pairs(workspace:GetChildren()) do
-		if p18.Anchored == true then
-			return;
-		end;
-		if v49:FindFirstChild("Humanoid") then
-			if v49:FindFirstChild("HumanoidRootPart") then
-				if v49 ~= l__Character__6 then
-					if (v49:FindFirstChild("HumanoidRootPart").Position - p18.Position).magnitude < p20 then
-						if v49:FindFirstChild("HumanoidRootPart"):FindFirstChild("alabo") == nil then
-							if p18.Anchored then
-								return;
-							end;
-							local l__Humanoid__50 = v49:FindFirstChild("Humanoid");
-							local l__HumanoidRootPart__51 = v49:FindFirstChild("HumanoidRootPart");
-							u44 = l__HumanoidRootPart__54.CFrame;
-							u45 = l__HumanoidRootPart__51.CFrame;
-							u46 = l__Humanoid__7.Health;
-							u47 = l__Humanoid__50.Health;
-							l__Damage14__67:FireServer(l__Humanoid__50, p19, ...);
-							local v52 = Instance.new("StringValue");
-							v52.Name = "alabo";
-							v52.Parent = l__HumanoidRootPart__51;
-							delay(p22, function()
-								v52:Destroy();
-							end);
-						end;
-					end;
-				end;
-			end;
-		end;
-		if v49:FindFirstChild("Stand") then
-			if v49.Stand:FindFirstChild("Stand Torso") then
-				if v49 ~= l__Character__6 then
-					if v49 ~= l__Character__6[l__Stand__9.Name] then
-						if (v49.Stand:FindFirstChild("Stand Torso").Position - p18.Position).magnitude < p20 then
-							if v49:FindFirstChild("HumanoidRootPart"):FindFirstChild("alabo") == nil then
-								if p18.Anchored then
-									return;
-								end;
-								local l__Humanoid__53 = v49:FindFirstChild("Humanoid");
-								local l__HumanoidRootPart__54 = v49:FindFirstChild("HumanoidRootPart");
-								u44 = l__HumanoidRootPart__54.CFrame;
-								u45 = l__HumanoidRootPart__54.CFrame;
-								u46 = l__Humanoid__7.Health;
-								u47 = l__Humanoid__53.Health;
-							    l__Damage14__67:FireServer(l__Humanoid__53, p19, p21);
-								local v55 = Instance.new("StringValue");
-								v55.Name = "alabo";
-								v55.Parent = l__HumanoidRootPart__54;
-								delay(p22, function()
-									v55:Destroy();
-								end);
-							end;
-						end;
-					end;
-				end;
-			end;
-		end;	
-	end;
-end;
+function hito2(partoz, partcfr, magn, dmg, debtim, debtime, bodyfdire, effect, grow, color, sound, pitch, volume)
+	if l__Disabled__18.Value == true then return end
+	for _, guy in pairs(workspace:GetChildren()) do
+		if partoz.Anchored == true then return end
+		if guy:FindFirstChild("Humanoid") and guy:FindFirstChild("HumanoidRootPart") and guy ~= l__Character__6 and magn > (guy:FindFirstChild("HumanoidRootPart").Position - partoz.Position).magnitude and guy:FindFirstChild("HumanoidRootPart"):FindFirstChild("alabo") == nil then
+			do
+				if partoz.Anchored then return end
+				local humz = guy:FindFirstChild("Humanoid")
+				local horp = guy:FindFirstChild("HumanoidRootPart")
+				l__Damage14__67:FireServer(humz, partcfr, dmg, debtime, bodyfdire, effect, grow, color, sound, pitch, volume)
+				local db = Instance.new("StringValue")
+				db.Name = "alabo"
+				db.Parent = horp
+				delay(debtim, function()
+					db:Destroy()
+				end)
+			end
+		end
+
+		if guy:FindFirstChild("Stand") and guy["Stand"]:FindFirstChild("Stand Torso") and guy ~= l__Character__6 and guy ~= l__Character__6[l__Stand__9.Name] and magn > (guy["Stand"]:FindFirstChild("Stand Torso").Position - partoz.Position).magnitude and guy:FindFirstChild("HumanoidRootPart"):FindFirstChild("alabo") == nil then
+			do   
+				if partoz.Anchored then return end
+				local humz = guy:FindFirstChild("Humanoid")
+				local horp = guy:FindFirstChild("HumanoidRootPart")
+				l__Damage14__67:FireServer(humz, partcfr, dmg, debtime, bodyfdire, effect, grow, color, sound, pitch, volume)
+				local db = Instance.new("StringValue")
+				db.Name = "alabo"
+				db.Parent = horp
+				delay(debtim, function()
+					db:Destroy()
+				end)
+			end
+		end
+
+	end
+end
 local l__Anchor__68 = l__ReplicatedStorage__1.Anchor;
 local u69 = l__Character__6["Right Arm"];
 local u70 = l__Character__6["Left Arm"];
@@ -872,19 +844,19 @@ l__ReplicatedStorage__1.KnockClient.OnClientEvent:connect(function(p31)
 	end;
 end);
 if (not _G.BanishConnection) then
-    _G.BanishConnection = workspace.ChildAdded:Connect(function(Char)
-        if (Char:IsA("Model")) then
-            if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
-    			_G.Banished = {}
-            end
-    	    if (table.find(_G.Banished, Char.Name)) then
-                local Humanoid = Char:WaitForChild("Humanoid")
-                local ForceField = Char:FindFirstChildOfClass("ForceField")
-                if (ForceField) then
-                    ForceField.AncestryChanged:Wait()
-                end
-    	        l__Damage__66:FireServer(Humanoid, nil, 999999);
-    	    end
-        end
+	_G.BanishConnection = workspace.ChildAdded:Connect(function(Char)
+		if (Char:IsA("Model")) then
+			if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
+				_G.Banished = {}
+			end
+			if (table.find(_G.Banished, Char.Name)) then
+				local Humanoid = Char:WaitForChild("Humanoid")
+				local ForceField = Char:FindFirstChildOfClass("ForceField")
+				if (ForceField) then
+					ForceField.AncestryChanged:Wait()
+				end
+				l__Damage__66:FireServer(Humanoid, nil, 999999);
+			end
+		end
 	end)
 end
