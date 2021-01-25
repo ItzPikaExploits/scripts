@@ -687,7 +687,7 @@ mouse.KeyDown:connect(function(p4)
 		l__Character__6.HumanoidRootPart.CFrame = CFrame.new(mouse.Hit.p + Vector3.new(0, 3, 0));
 		game.ReplicatedStorage.Taunt:FireServer(l__Character__6.Head, "rbxassetid://4845894614", 10, 1, 0)
 		cPoseAnim:Play(0, 1, 1)
-		wait(0.1)
+		wait(0.25)
 		cPoseAnim:Stop(0.3)
 	end;
 	if p4 == "g" then
