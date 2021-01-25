@@ -238,7 +238,6 @@ function punch()
 	l__Trail__10:FireServer(l__Stand_Left_Arm__12.Trail, false);
 end;
 local u30 = false;
-local u31 = nil;
 local l__HeavyPunch__32 = l__StandHumanoidRootPart__10.HeavyPunch;
 local l__PrimaryBomb__33 = l__StandHumanoidRootPart__10.PrimaryBomb;
 local u34 = l__Humanoid__7:LoadAnimation(l__StandHumanoidRootPart__10.StrongPunch);
@@ -248,7 +247,6 @@ function bomb()
 		return;
 	end;
 	u1 = true;
-	u31 = true;
 	u30 = true;
 	l__HeavyPunch__32:Play();
 	l__PrimaryBomb__33:Play();
@@ -311,7 +309,6 @@ function btd()
 		return;
 	end;
 	u1 = true;
-	u31 = false;
 	u38 = true;
 	u39 = true;
 	l__HeavyPunch__32:Play();
@@ -399,7 +396,6 @@ function cointhrow()
 	wait(0.5);
 	standappear(false)
 	u1 = false;
-	u31 = true;
 	l__Humanoid__7.JumpPower = 50;
 	u48 = false;
 end;
@@ -650,7 +646,7 @@ mouse.KeyDown:connect(function(p4)
 	if p4 == "r" then
 		if (not BombTarget) then
 			bomb();
-		elseif (BombTarget) and u31 == true then
+		elseif (BombTarget) then
 			detonate();
 		end;
 	end;
