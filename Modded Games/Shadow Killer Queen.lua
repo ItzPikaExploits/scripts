@@ -299,7 +299,7 @@ function detonate()
 	standappear(false)
 	l__Bomb__36:Play();
 	BombTarget = nil;
-	l__Damage__66:FireServer(l__Character__6.Target.Value.Humanoid, nil, 999999);
+	l__Damage__66:FireServer(BombTarget.Humanoid, nil, 999999);
 	u1 = false;
 end;
 local u38 = false;
