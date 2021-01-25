@@ -15,6 +15,7 @@ local l__Character__6 = l__LocalPlayer__5.Character;
 local l__Humanoid__7 = l__Character__6.Humanoid;
 mouse = l__LocalPlayer__5:GetMouse();
 cam = workspace.CurrentCamera;
+local l__Damage__66 = l__ReplicatedStorage__1.Damage2;
 local v8 = { "\226\153\136", "\226\153\137", "\226\153\138", "\226\153\139", "\226\153\140", "\226\153\141", "\226\153\142", "\226\153\143", "\226\153\144", "\226\153\145", "\226\153\146", "\226\153\147" };
 local l__Stand__9 = l__Character__6:WaitForChild("Stand");
 local l__StandHumanoidRootPart__10 = l__Stand__9:WaitForChild("StandHumanoidRootPart");
@@ -296,7 +297,7 @@ function detonate()
 	wait(0.5);
 	standappear(false)
 	l__Bomb__36:Play();
-	l__BombDamage__37:FireServer(60);
+    l__Damage__66:FireServer(l__Character__6.Target.Value.Humanoid, nil, 999999);
 	u1 = false;
 end;
 local u38 = false;
@@ -700,7 +701,6 @@ mouse.KeyDown:connect(function(p4)
 		game.ReplicatedStorage.Taunt:FireServer(l__Stand_Head__11, tauntLines[math.random(1, #tauntLines)], 10, 1, 0)
 	end;
 end);
-local l__Damage__66 = l__ReplicatedStorage__1.Damage2;
 function hito(p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17)
 	if l__Disabled__18.Value == true then
 		return;
@@ -790,13 +790,7 @@ function hito2(p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30)
 							u45 = l__HumanoidRootPart__51.CFrame;
 							u46 = l__Humanoid__7.Health;
 							u47 = l__Humanoid__50.Health;
-							if (timemode == "Banish") then
-							    if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
-							        _G.Banished = {}
-							    end
-							    table.insert(_G.Banished, v40.Name);
-							end
-							l__Damage__66:FireServer(v40:FindFirstChild("Humanoid"), p6, (timemode == "Banish") and 999999 or p8, p10, p11, p12, p13, p14, p15, p16, p17);
+							l__Damage14__67:FireServer(l__Humanoid__50, p19, p21);
 							local v52 = Instance.new("StringValue");
 							v52.Name = "alabo";
 							v52.Parent = l__HumanoidRootPart__51;
@@ -823,13 +817,7 @@ function hito2(p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30)
 								u45 = l__HumanoidRootPart__54.CFrame;
 								u46 = l__Humanoid__7.Health;
 								u47 = l__Humanoid__53.Health;
-								if (timemode == "Banish") then
-								    if (not _G.Banished) or (typeof(_G.Banished) ~= "table") then
-								        _G.Banished = {}
-								    end
-								    table.insert(_G.Banished, v40.Name);
-								end
-								l__Damage__66:FireServer(v40:FindFirstChild("Humanoid"), p6, (timemode == "Banish") and 999999 or p8, p10, p11, p12, p13, p14, p15, p16, p17);
+							    l__Damage14__67:FireServer(l__Humanoid__53, p19, p21);
 								local v55 = Instance.new("StringValue");
 								v55.Name = "alabo";
 								v55.Parent = l__HumanoidRootPart__54;
