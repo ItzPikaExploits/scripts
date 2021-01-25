@@ -31,7 +31,6 @@ local l__StandAppear__6 = l__StandHumanoidRootPart__10.StandAppear;
 local l__Transparency__7 = l__ReplicatedStorage__1.Transparency;
 local l__face__8 = l__Stand__9:WaitForChild("OuterHead"):WaitForChild("face");
 l__LocalPlayer__5.Backpack.Client["scr-KillerQueen"].Disabled = true;
-l__ReplicatedStorage__1.Epitaph:FireServer(BrickColor.new("White"))
 function standappear(u3)
 	if u3 == true then
 		u4:Stop();
@@ -639,7 +638,7 @@ mouse.KeyDown:connect(function(p4)
 		else 
 		    timemode = "Timestop"
 		end
-        label.Text = "Mode: ".. timemode
+        	label.Text = "Mode: ".. timemode
 	end;
 	if p4 == "e" then
 		barrage();
@@ -682,6 +681,7 @@ mouse.KeyDown:connect(function(p4)
 		dodge();
 	end;
 	if p4 == "v" then
+		l__ReplicatedStorage__1.Epitaph:FireServer(BrickColor.new("White"))
 		l__StandAppear__6:Play();
 		l__Character__6.HumanoidRootPart.CFrame = CFrame.new(mouse.Hit.p + Vector3.new(0, 3, 0));
 		game.ReplicatedStorage.Taunt:FireServer(l__Character__6.Head, "rbxassetid://4845894614", 10, 1, 0)
