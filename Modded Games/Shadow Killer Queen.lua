@@ -260,7 +260,7 @@ function bomb()
 		local v31 = 1 - 1;
 		while true do
 			wait();
-			hito2(l__Stand_Right_Arm__11, l__Stand_Right_Arm__11.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)), 3, 2.5, 0.75, 0.25, l__StandHumanoidRootPart__10.CFrame.lookVector * 25, "rbxassetid://241837157", 0.075, Color3.new(255, 255, 255), "rbxassetid://260430079", math.random(9, 11) / 10, math.random(9, 11) / 10);
+			hito2(l__Stand_Right_Arm__11, l__Stand_Right_Arm__11.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)), 3, 6, 0.75, 0.25, l__StandHumanoidRootPart__10.CFrame.lookVector * 25, "rbxassetid://241837157", 0.075, Color3.new(255, 255, 255), "rbxassetid://260430079", math.random(9, 11) / 10, math.random(9, 11) / 10);
 			if 0 <= 1 then
 				if v31 < 15 then
 
@@ -296,8 +296,8 @@ function detonate()
 	wait(0.5);
 	standappear(false)
 	l__Bomb__36:Play();
-	BombTarget = nil;
 	l__Damage__66:FireServer(BombTarget.Humanoid, nil, 999999);
+	BombTarget = nil;
 	u1 = false;
 end;
 local u38 = false;
