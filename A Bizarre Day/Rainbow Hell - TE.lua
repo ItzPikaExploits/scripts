@@ -238,7 +238,7 @@ Mouse.KeyDown:Connect(function(Key)
 		    if (not SilentBullets) then
     			Replicated.Damage:FireServer(unpack({
     				Humanoid,
-    				GetBarrel().CFrame,
+    				Character["Right Arm"].CFrame * CFrame.new(0, -1.5, 0),
     				0,
     				0,
     				Vector3.new(0, 0, 0),
@@ -250,7 +250,7 @@ Mouse.KeyDown:Connect(function(Key)
     				2
     			}))
     		elseif (SilentBullets) then
-    		    CreateSilentBall(GetBarrel().CFrame)
+    		    CreateSilentBall(Character["Right Arm"].CFrame * CFrame.new(0, -1.5, 0))
     		end
 		    wait()
 		until released;
@@ -258,7 +258,7 @@ Mouse.KeyDown:Connect(function(Key)
 		FireAnim:AdjustSpeed(1)
 		wait(0.5);
 		Attack = false;
-		local oPos = CFrame.new(GetBarrel().Position, Mouse.Hit.p);
+		local oPos = CFrame.new((Character["Right Arm"].CFrame * CFrame.new(0, -1.5, 0)).p, Mouse.Hit.p);
 		for i = 1, 50 do
 		    local nPos = oPos * CFrame.new(0, 0, -(i * 10))
 		    if (not SilentBullets) then
@@ -334,7 +334,7 @@ Mouse.KeyDown:Connect(function(Key)
 		    if (not SilentBullets) then
     			Replicated.Damage:FireServer(unpack({
     				Humanoid,
-    				GetBarrel().CFrame,
+    				Character["Right Arm"].CFrame * CFrame.new(0, -1.5, 0),
     				0,
     				0,
     				Vector3.new(0, 0, 0),
@@ -346,7 +346,7 @@ Mouse.KeyDown:Connect(function(Key)
     				2
     			}))
     		elseif (SilentBullets) then
-    		    CreateSilentBall(GetBarrel().CFrame)
+    		    CreateSilentBall(Character["Right Arm"].CFrame * CFrame.new(0, -1.5, 0))
     		end
 		    wait()
 		until released;
@@ -354,7 +354,7 @@ Mouse.KeyDown:Connect(function(Key)
 		FireAnim:AdjustSpeed(1)
 		wait(0.5);
 		Attack = false;
-		local oPos = CFrame.new(GetBarrel().Position, Mouse.Hit.p);
+		local oPos = CFrame.new((Character["Right Arm"].CFrame * CFrame.new(0, -1.5, 0)).p, Mouse.Hit.p);
 		for i = 1, 25 do
 		    local nPos = oPos * CFrame.new(0, 0, -(i * 5))
 		    if (not SilentBullets) then
