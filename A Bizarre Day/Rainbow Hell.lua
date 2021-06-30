@@ -228,11 +228,11 @@ Mouse.KeyDown:Connect(function(Key)
 		connection1:Disconnect();
 		Attack = false;
 	end
-	if (Key == "e") then
+	if (Key == "v") then
 		Attack = true;
 		local released = false;
 		local connection = Mouse.KeyUp:Connect(function(Key)
-			if (Key == "e") then
+			if (Key == "v") then
 				released = true;
 			end
 		end)
@@ -288,11 +288,11 @@ Mouse.KeyDown:Connect(function(Key)
 		    wait()
 		end
 	end
-	if (Key == "b") then
+	if (Key == "j") then
 		Attack = true;
 		local released = false;
 		local connection = Mouse.KeyUp:Connect(function(Key)
-			if (Key == "b") then
+			if (Key == "j") then
 				released = true;
 			end
 		end)
@@ -324,11 +324,11 @@ Mouse.KeyDown:Connect(function(Key)
 		hito(Character.HumanoidRootPart, 80, 690, "rbxassetid://5256332728", 100)
 		Attack = false;
     end
-	if (Key == "v") then
+	if (Key == "b") then
 		Attack = true;
 		local released = false;
 		local connection = Mouse.KeyUp:Connect(function(Key)
-			if (Key == "v") then
+			if (Key == "b") then
 				released = true;
 			end
 		end)
