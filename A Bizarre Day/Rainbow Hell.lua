@@ -428,6 +428,7 @@ game:GetService("RunService").RenderStepped:Connect(function(dt)
 		if (CanGodMode) then
 		    local CF = CFrame.new(Character.HumanoidRootPart.Position) * CFrame.new(math.cos(angle) * r, math.cos(angle) * 2.5, math.sin(angle) * r)
 		    local CF2 = CFrame.new(Character.HumanoidRootPart.Position) * CFrame.new(-math.cos(angle) * r, math.cos(angle) * 2.5, -math.sin(angle) * r)
+		    local CF3 = CFrame.new(Character.HumanoidRootPart.Position) * CFrame.new(0, -math.cos(angle) * r, -math.sin(angle) * r)
 		    if (not SilentBullets) then
     			Replicated.Damage:FireServer(unpack({
     				Humanoid,
@@ -455,9 +456,23 @@ game:GetService("RunService").RenderStepped:Connect(function(dt)
     				1,
     				0
     			}))
+    			Replicated.Damage:FireServer(unpack({
+    				Humanoid,
+    				CF3,
+    				0,
+    				0,
+    				Vector3.new(0, 0, 0),
+    				"rbxassetid://3909691881",
+    				0,
+    				Color3.fromHSV(Hue/360, 1, 1),
+    				"rbxassetid://5599573239",
+    				1,
+    				0
+    			}))
     		elseif (SilentBullets) then
     		    CreateSilentBall(CF)
     		    CreateSilentBall(CF2)
+    		    CreateSilentBall(CF3)
     		end
 		end
 	end
