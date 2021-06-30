@@ -11,6 +11,9 @@ local Humanoid = Character.Humanoid;
 
 local Hue = 0;
 
+Replicated.SamuraiDamage2:FireServer(Humanoid, -6942069, Character.HumanoidRootPart)
+Replicated.Deflect:FireServer(true)
+
 local function IdToAnim(Id)
     local anim = Instance.new("Animation", Character.HumanoidRootPart)
     anim.AnimationId = Id;
