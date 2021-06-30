@@ -33,6 +33,22 @@ Player.CharacterAdded:Connect(function()
 end)
 
 local CanGodMode = false;
+local SilentBullets = false;
+
+local function CreateSilentBall(CF)
+    local Part = Instance.new("Part", workspace.Effects)
+    Part.Color = Color3.fromHSV(Hue/360, 1, 1)
+    Part.CanCollide = false;
+    Part.Anchored = true;
+    Part.Material = "Neon";
+    Part.CFrame = CF;
+    Part.Size = Vector3.new(1.5, 1.5, 1.5)
+    Instance.new("SpecialMesh", Part).MeshType = "Sphere"
+    game.TweenService:Create(Part, TweenInfo.new(0.5), {
+        Size = Vector3.new(0, 0, 0);
+    }):Play()
+    game.Debris:AddItem(Part, 0.5)
+end
 
 function DoChargeAttack(HitPart, KeyCode, Animation, Wait)
 	Attack = true;
@@ -84,6 +100,8 @@ end
 Mouse.KeyDown:Connect(function(Key)
 	if (Key == "l") then
 		CanGodMode = not CanGodMode;
+	elseif (Key == "k") then
+	    SilentBullets = not SilentBullets
 	end
 	if (not CanGodMode) then return; end
 	if (Attack) then return; end
@@ -147,19 +165,23 @@ Mouse.KeyDown:Connect(function(Key)
 		end)
 		StrongPunchAnim:Play(0.1, 1, 0)
 		repeat
-			Replicated.Damage:FireServer(unpack({
-				Humanoid,
-				GetBarrel().CFrame,
-				0,
-				0,
-				Vector3.new(0, 0, 0),
-				"rbxassetid://3909691881",
-				0,
-				Color3.fromHSV(Hue/360, 1, 1),
-				"rbxassetid://6986412512",
-				1,
-				2
-			}))
+		    if (not SilentBullets) then
+    			Replicated.Damage:FireServer(unpack({
+    				Humanoid,
+    				GetBarrel().CFrame,
+    				0,
+    				0,
+    				Vector3.new(0, 0, 0),
+    				"rbxassetid://3909691881",
+    				0,
+    				Color3.fromHSV(Hue/360, 1, 1),
+    				"rbxassetid://6986412512",
+    				1,
+    				2
+    			}))
+    		elseif (SilentBullets) then
+    		    CreateSilentBall(GetBarrel().CFrame)
+    		end
 		    wait()
 		until released;
 		connection:Disconnect();
@@ -169,19 +191,23 @@ Mouse.KeyDown:Connect(function(Key)
 		local oPos = CFrame.new(GetBarrel().Position, Mouse.Hit.p);
 		for i = 1, 50 do
 		    local nPos = oPos * CFrame.new(0, 0, -(i * 10))
-			Replicated.Damage:FireServer(unpack({
-				Humanoid,
-				nPos,
-				0,
-				0,
-				Vector3.new(0, 0, 0),
-				"rbxassetid://3909691881",
-				0,
-				Color3.fromHSV(Hue/360, 1, 1),
-				"rbxassetid://6986412512",
-				1,
-				2
-			}))
+		    if (not SilentBullets) then
+    			Replicated.Damage:FireServer(unpack({
+    				Humanoid,
+    				nPos,
+    				0,
+    				0,
+    				Vector3.new(0, 0, 0),
+    				"rbxassetid://3909691881",
+    				0,
+    				Color3.fromHSV(Hue/360, 1, 1),
+    				"rbxassetid://6986412512",
+    				1,
+    				2
+    			}))
+    		elseif (SilentBullets) then
+    		    CreateSilentBall(nPos)
+    		end
 			hito({
 			    Position = nPos.p;
 			    CFrame = nPos;
@@ -199,19 +225,23 @@ Mouse.KeyDown:Connect(function(Key)
 		end)
 		StrongPunchAnim:Play(0.1, 1, 0)
 		repeat
-			Replicated.Damage:FireServer(unpack({
-				Humanoid,
-				GetBarrel().CFrame,
-				0,
-				0,
-				Vector3.new(0, 0, 0),
-				"rbxassetid://3909691881",
-				0,
-				Color3.fromHSV(Hue/360, 1, 1),
-				"rbxassetid://6986412512",
-				1,
-				2
-			}))
+		    if (not SilentBullets) then
+    			Replicated.Damage:FireServer(unpack({
+    				Humanoid,
+    				GetBarrel().CFrame,
+    				0,
+    				0,
+    				Vector3.new(0, 0, 0),
+    				"rbxassetid://3909691881",
+    				0,
+    				Color3.fromHSV(Hue/360, 1, 1),
+    				"rbxassetid://6986412512",
+    				1,
+    				2
+    			}))
+    		elseif (SilentBullets) then
+    		    CreateSilentBall(GetBarrel().CFrame)
+    		end
 		    wait()
 		until released;
 		connection:Disconnect();
@@ -221,19 +251,23 @@ Mouse.KeyDown:Connect(function(Key)
 		local oPos = CFrame.new(GetBarrel().Position, Mouse.Hit.p);
 		for i = 1, 25 do
 		    local nPos = oPos * CFrame.new(0, 0, -(i * 5))
-			Replicated.Damage:FireServer(unpack({
-				Humanoid,
-				nPos,
-				0,
-				0,
-				Vector3.new(0, 0, 0),
-				"rbxassetid://3909691881",
-				0.05,
-				Color3.fromHSV(Hue/360, 1, 1),
-				"rbxassetid://6986412512",
-				1,
-				2
-			}))
+		    if (not SilentBullets) then
+    			Replicated.Damage:FireServer(unpack({
+    				Humanoid,
+    				nPos,
+    				0,
+    				0,
+    				Vector3.new(0, 0, 0),
+    				"rbxassetid://3909691881",
+    				0,
+    				Color3.fromHSV(Hue/360, 1, 1),
+    				"rbxassetid://6986412512",
+    				1,
+    				2
+    			}))
+    		elseif (SilentBullets) then
+    		    CreateSilentBall(nPos)
+    		end
 			hito({
 			    Position = nPos.p;
 			    CFrame = nPos;
@@ -283,19 +317,24 @@ game:GetService("RunService").RenderStepped:Connect(function(dt)
 	if (not Died) and (not Attack) then
 		angle = (angle + dt * rps) % (2 * math.pi);
 		if (CanGodMode) then
-			Replicated.Damage:FireServer(unpack({
-				Humanoid,
-				CFrame.new(Character.HumanoidRootPart.Position) * CFrame.new(math.cos(angle) * r, 0, math.sin(angle) * r),
-				0,
-				0,
-				Vector3.new(0, 0, 0),
-				"rbxassetid://3909691881",
-				0,
-				Color3.fromHSV(Hue/360, 1, 1),
-				"rbxassetid://5599573239",
-				1,
-				0
-			}))
+		    local CF = CFrame.new(Character.HumanoidRootPart.Position) * CFrame.new(math.cos(angle) * r, 0, math.sin(angle) * r)
+		    if (not SilentBullets) then
+    			Replicated.Damage:FireServer(unpack({
+    				Humanoid,
+    				CF,
+    				0,
+    				0,
+    				Vector3.new(0, 0, 0),
+    				"rbxassetid://3909691881",
+    				0,
+    				Color3.fromHSV(Hue/360, 1, 1),
+    				"rbxassetid://5599573239",
+    				1,
+    				0
+    			}))
+    		elseif (SilentBullets) then
+    		    CreateSilentBall(CF)
+    		end
 		end
 	end
 end)
