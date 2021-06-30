@@ -139,7 +139,7 @@ Mouse.KeyDown:Connect(function(Key)
             				Color3.fromHSV(Hue/360, 1, 1),
             				"rbxassetid://5599573239",
             				1,
-            				1
+            				0
             			}))
             			Replicated.Damage:FireServer(unpack({
             				Humanoid,
@@ -152,7 +152,7 @@ Mouse.KeyDown:Connect(function(Key)
             				Color3.fromHSV(Hue/360, 1, 1),
             				"rbxassetid://5599573239",
             				1,
-            				1
+            				0
             			}))
 	                elseif (SilentBullets) then
         		        CreateSilentBall(Character["Left Arm"].CFrame * CFrame.new(0, -1, 0))
