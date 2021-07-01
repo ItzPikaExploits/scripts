@@ -183,6 +183,7 @@ table.insert(connections, game:GetService("RunService").RenderStepped:Connect(fu
                         end
                         if (t:IsA("Tool") and t:FindFirstChild("Handle")) then
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = t.Handle.CFrame;
+							game.Players.LocalPlayer.Character.Humanoid:MoveTo(t.Handle.Position)
                             wait(library.flags.timeBetweeniTPS2);
                         end
                     end
