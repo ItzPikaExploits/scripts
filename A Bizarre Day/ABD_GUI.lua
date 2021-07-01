@@ -47,6 +47,14 @@ local function Notify(Text, DoSound, sProps)
     Frame:TweenPosition(UDim2.new(0.5, 0, 0, -yGuiInset), "Out", "Quad", 1)
 end
 
+local function NameToEntity(Name)
+    local e = workspace.Entities:FindFirstChild(Name);
+    if (Name == "me") then
+        e = game.Players.LocalPlayer.Character;
+    end
+    return e;
+end
+
 local window = library:CreateWindow('A Bizarre Day') do
 	local folder = window:AddFolder('Grinding') do
 	    folder:AddToggle({ text = 'Item Grind', flag = 'autoGrab', callback=function()
@@ -79,6 +87,43 @@ local window = library:CreateWindow('A Bizarre Day') do
     	    end
 	    end})
     end
+	local folder = window:AddFolder('Target') do
+        folder:AddBox({ text = 'Victim', value = "", flag = "targetName" })
+        folder:AddButton({ text = 'Kill', callback = function()
+            local e = NameToEntity(library.flags.targetName);
+            if (not e) then
+                Notify("\"".. library.flags.targetName .."\" is not a valid entity!");
+            else
+                for i = 1, 100 do
+                    Replicated.Damage:FireServer(unpack({
+                        e.Humanoid,
+                        e:GetPrimaryPartCFrame(),
+                        80,
+                        0,
+                        Vector3.new(),
+                        "rbxassetid://3909691881",
+                        0,
+                        Color3.new(1, 1, 1),
+                        "rbxassetid://5599573239",
+                        1,
+                        0
+                    }))
+                end
+            end
+	    end})
+        folder:AddButton({ text = 'God', callback = function()
+            local e = NameToEntity(library.flags.targetName);
+            if (not e) then
+                Notify("\"".. library.flags.targetName .."\" is not a valid entity!");
+            else
+                Replicated.SamuraiDamage2:FireServer(unpack({
+                    e.Humanoid,
+                    -1000000000000,
+                    e.HumanoidRootPart,
+                }))
+            end
+	    end})
+    end
 	local folder = window:AddFolder('Extra') do
 	    folder:AddToggle({ text = 'Anti AFK', flag = 'antiAFK', callback=function()
 	        Notify((library.flags.antiAFK and "Enabled" or "Disabled") .." Anti-AFK", library.flags.antiAFK) 
@@ -106,7 +151,7 @@ table.insert(connections, game:GetService("RunService").RenderStepped:Connect(fu
     if (library.flags.bossFarm) then
         local _, err = pcall(function()
             for _, e in pairs(workspace.Entities:GetChildren()) do
-                if (table.find(_G.bossesToGrind, e.Name) and (e.Humanoid.Health > 0)) then
+                if (table.find(_G.bossesToGrind, e.Name) and (e:FindFirstChild("Humanoid")) and (e.Humanoid.Health > 0)) then
 					if (not e.Deflect.Value) then
 						Replicated.Damage:FireServer(unpack({
 							e.Humanoid,
