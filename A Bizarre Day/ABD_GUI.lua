@@ -35,19 +35,21 @@ table.insert(connections, game:GetService("RunService").RenderStepped:Connect(fu
         local _, err = pcall(function()
             for _, e in pairs(workspace.Entities:GetChildren()) do
                 if (table.find(_G.bossesToGrind, e.Name) and (e.Humanoid.Health > 0)) then
-        			Replicated.Damage:FireServer(unpack({
-        				e.Humanoid,
-        				e:GetPrimaryPartCFrame(),
-        				80,
-        				0,
-        				Vector3.new(),
-        				"rbxassetid://3909691881",
-        				0,
-        				Color3.new(1, 1, 1),
-        				"rbxassetid://5599573239",
-        				1,
-        				0
-        			}))
+					if (not e.Deflect.Value) then
+						Replicated.Damage:FireServer(unpack({
+							e.Humanoid,
+							e:GetPrimaryPartCFrame(),
+							80,
+							0,
+							Vector3.new(),
+							"rbxassetid://3909691881",
+							0,
+							Color3.new(1, 1, 1),
+							"rbxassetid://5599573239",
+							1,
+							0
+						}))
+					end
                 end
             end
         end)
