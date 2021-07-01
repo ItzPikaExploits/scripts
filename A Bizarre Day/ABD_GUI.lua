@@ -33,7 +33,7 @@ local lastTP = 0;
 table.insert(connections, game:GetService("RunService").RenderStepped:Connect(function()
     if (library.flags.bossFarm) then
         for _, e in pairs(workspace.Entities:GetChildren()) do
-            if (table.find(_G.bossesToGrind, e.Name) and (e.Health > 0)) then
+            if (table.find(_G.bossesToGrind, e.Name) and (e.Humanoid.Health > 0)) then
                 Replicated.Damage:FireServer(e.Humanoid, CFrame.new(), 80, 0, "", 0, BrickColor.Random().Color, "rbxassetid://5599573239", 1, 0)
             end
         end
