@@ -32,11 +32,26 @@ local lastTP = 0;
 
 table.insert(connections, game:GetService("RunService").RenderStepped:Connect(function()
     if (library.flags.bossFarm) then
-        for _, e in pairs(workspace.Entities:GetChildren()) do
-            if (table.find(_G.bossesToGrind, e.Name) and (e.Humanoid.Health > 0)) then
-                Replicated.Damage:FireServer(e.Humanoid, CFrame.new(), 80, 0, "", 0, BrickColor.Random().Color, "rbxassetid://5599573239", 1, 0)
+        local _, err = pcall(function()
+            for _, e in pairs(workspace.Entities:GetChildren()) do
+                if (table.find(_G.bossesToGrind, e.Name) and (e.Humanoid.Health > 0)) then
+        			Replicated.Damage:FireServer(unpack({
+        				e.Humanoid,
+        				e:GetPrimaryPartCFrame(),
+        				80,
+        				0,
+        				Vector3.new(),
+        				"rbxassetid://3909691881",
+        				0,
+        				Color3.new(1, 1, 1),
+        				"rbxassetid://5599573239",
+        				1,
+        				0
+        			}))
+                end
             end
-        end
+        end)
+        if (err) then warn(err) end
     end
     if (os.clock() - lastTP) >= library.flags.timeBetweenGrabs then
         pcall(function()
