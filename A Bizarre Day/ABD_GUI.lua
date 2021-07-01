@@ -1,10 +1,11 @@
-local Replicated = game:GetService("ReplicatedStorage")
+local Replicated = game:GetService("ReplicatedStorage");
+local VirtualUser = game:GetService("VirtualUser");
 
 local library = loadstring(game:HttpGet("https://pastebin.com/raw/1Sa4Z0eK"))()
 
 _G.bossesToGrind = {"Funny Valentine", "DIO"}
 
-local rs;
+local connections = {};
 
 local window = library:CreateWindow('A Bizarre Day') do
 	local folder = window:AddFolder('Main') do
@@ -13,8 +14,13 @@ local window = library:CreateWindow('A Bizarre Day') do
 	    folder:AddToggle({ text = 'Boss Farm', flag = 'bossFarm' })
     end
 	local folder = window:AddFolder('Extra') do
-	    folder:AddButton({ text = 'Kill GUI', callback = function()
-	        rs:Disconnect()
+	    folder:AddToggle({ text = 'Anti AFK', flag = 'antiAFK' })
+        folder:AddButton({ text = 'Kill GUI', callback = function()
+	        for _, c in pairs(connections) do
+	            pcall(function()
+	                c:Disconnect()
+	            end)
+	        end
 	        library:Close()
 	    end})
     end
@@ -24,7 +30,7 @@ library:Init()
 
 local lastTP = 0;
 
-rs = game:GetService("RunService").RenderStepped:Connect(function()
+table.insert(connections, game:GetService("RunService").RenderStepped:Connect(function()
     if (library.flags.bossFarm) then
         for _, e in pairs(workspace.Entities:GetChildren()) do
             if (table.find(_G.bossesToGrind, e.Name) and (e.Health > 0)) then
@@ -48,4 +54,10 @@ rs = game:GetService("RunService").RenderStepped:Connect(function()
             lastTP = os.clock();
         end)
     end
-end)
+end))
+table.insert(connections, game.Players.LocalPlayer.Idled:Connect(function()
+    if (library.flags.antiAFK) then
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end
+end))
