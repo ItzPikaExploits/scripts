@@ -3,7 +3,7 @@ local VirtualUser = game:GetService("VirtualUser");
 local Debris = game:GetService("Debris");
 local GuiService = game:GetService("GuiService");
 
-local library = loadstring(game:HttpGet("https://pastebin.com/raw/1Sa4Z0eK"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/UIUtilEdit.lua"))()
 
 _G.bossesToGrind = {"Funny Valentine", "DIO"}
 
