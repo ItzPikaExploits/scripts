@@ -3,7 +3,7 @@ local Debris = game:GetService("Debris");
 local GuiService = game:GetService("GuiService");
 local Replicated = game:GetService("ReplicatedStorage");
 
-local library = loadstring(game:HttpGet("https://pastebin.com/raw/1Sa4Z0eK"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/UIUtilEdit.lua"))()
 
 local function Notify(Text, DoSound, sProps)
     local ScreenGui = Instance.new("ScreenGui", game.CoreGui);
