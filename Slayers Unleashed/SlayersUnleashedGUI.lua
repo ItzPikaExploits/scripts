@@ -1,14 +1,7 @@
---[[
-    SlayersUnleashedGUI.lua
-    @loafa
-
-    This GUI includes:
-    - Auto clicker: This allows you to use your computer while grinding logs.
---]]
-
 local VirtualUser = game:GetService("VirtualUser");
 local Debris = game:GetService("Debris");
 local GuiService = game:GetService("GuiService");
+local Replicated = game:GetService("ReplicatedStorage");
 
 local library = loadstring(game:HttpGet("https://pastebin.com/raw/1Sa4Z0eK"))()
 
@@ -57,6 +50,9 @@ local window = library:CreateWindow('Slayers Unleashed') do
 	    folder:AddToggle({ text = 'Auto Clicker', flag = 'autoClicker', callback=function()
 	        Notify((library.flags.autoClicker and "Enabled" or "Disabled") .." Auto Clicker", library.flags.autoClicker) 
 	    end})
+	    folder:AddLabel({ text = "- Stamina" })
+	    folder:AddSlider({ text = "-> Stop At", flag = "staminaStop", min=0, max=100, value=20 })
+	    folder:AddSlider({ text = "-> Wait For (on stop)", flag = "staminaWait", min=0, max=100, value=100 })
 	end
 	local folder = window:AddFolder('Extra') do
 	    folder:AddButton({ text = 'Close GUI', callback=function()
@@ -66,15 +62,33 @@ local window = library:CreateWindow('Slayers Unleashed') do
 	            end)
 	        end
 	        library:Close()
-	        Notify("Thanks for using ABDGUI by loafa!", true, {Volume=5})
+	        Notify("Thanks for using SlayersUnleashedGUI by loafa!", true, {Volume=5})
 	    end})
+	end
+	local folder = window:AddFolder('Credits') do
+	    folder:AddLabel({ text = "Made by loafa" })
 	end
 end
 
 library:Init();
 
+local autoclicker = {
+    stopped = false,
+}
+
 table.insert(Connections, game:GetService("RunService").Heartbeat:Connect(function()
     if (library.flags.autoClicker) then
+        if (not autoclicker.stopped) then
+            if (Replicated.PlayerValues[game.Players.LocalPlayer.Name].Stamina.Value <= library.flags.staminaStop) then
+                autoclicker.stopped = true;
+                return;
+            end
+        elseif (autoclicker.stopped) then
+            if (Replicated.PlayerValues[game.Players.LocalPlayer.Name].Stamina.Value) >= library.flags.staminaWait then
+                autoclicker.stopped = false;
+            end
+            return;
+        end
         VirtualUser:ClickButton1(Vector2.new())
     end
 end))
