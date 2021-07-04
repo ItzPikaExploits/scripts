@@ -311,7 +311,7 @@ function PoseFunc()
 			wait(1.49);
 			--Animations.Pose2:Play()
 		end)
-		wait(1.6);
+		wait(1.5);
 		Animations.Pose1:AdjustSpeed(0)
 		POSING = true;
 		coroutine.wrap(function()
