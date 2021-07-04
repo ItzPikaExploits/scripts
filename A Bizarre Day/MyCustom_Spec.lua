@@ -21,8 +21,8 @@ local Animations = {
 	["Barrage"] = "rbxassetid://3445788051";
 	["Shove"] = "rbxassetid://4646232248";
 	["Yell"] = "rbxassetid://3469508283";
-	["Pose1"] = "rbxassetid://5577817478";
-	["Pose2"] = "rbxassetid://5577813044";
+	["Pose1"] = "rbxassetid://4659036460";
+	["Pose2"] = "rbxassetid://4659036460";
 };
 local AnimationData = {
 	["Fire"] = {
