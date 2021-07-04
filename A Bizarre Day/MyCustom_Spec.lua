@@ -122,8 +122,8 @@ Attacks["e"] = function()
 	ATTACK = true;
 	Animations.Barrage:Play();
 	Fwait(AnimationData.StrongPunch.Start)
-	Sound(4255432837, math.random(75, 125)/100, 2)
 	while (UserInputService:IsKeyDown(Enum.KeyCode.E)) do
+		Sound(4255432837, math.random(75, 125)/100, 2)
 		hito(Character["Right Arm"], 2, Replicated.Damage12, {
 			[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
 			[2] = 80,
