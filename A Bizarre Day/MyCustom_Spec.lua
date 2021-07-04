@@ -439,6 +439,14 @@ table.insert(Connections, Player.Chatted:Connect(function(msg)
 					}))
 				end)
 			end
+		elseif (args[1] == "to") then
+			if (not args[2]) then
+				return;
+			end
+			local p2 = nametoplayers(args[2])[1];
+			if (p2) then
+			    Character.HumanoidRootPart.CFrame = p2.Character.HumanoidRootPart.CFrame;
+			end
 		end
 	end
 end))
