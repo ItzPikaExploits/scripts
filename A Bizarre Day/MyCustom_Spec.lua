@@ -100,7 +100,19 @@ function Sound(id, pitch, volume, atpos)
 	Replicated.Damage12:FireServer(unpack(Args))
 end
 
+local lasteffect = 0;
+local effectremotes = {
+	Replicated.Damage12,
+	Replicated.Damage12Sans,
+	Replicated.Damage12Enderman,
+};
+
 function ballofepic(size, atpos)
+	if (lasteffect + 1) > 3 then
+		lasteffect = 1;
+	else
+		lasteffect += 1;
+	end
 	local Args = {
 		[1] = GetHumanoidForEffect(),
 		[2] = (atpos or Character.HumanoidRootPart.CFrame),
@@ -112,7 +124,7 @@ function ballofepic(size, atpos)
 		[8] = 0, 
 		[9] = 0
 	};
-	Replicated.Damage12:FireServer(unpack(Args))
+	effectremotes[lasteffect]:FireServer(unpack(Args))
 end
 
 Attacks["r"] = function()
@@ -185,6 +197,14 @@ end
 Attacks["e"] = function()
 	ATTACK = true;
 	Sound(6938602398, 1.5, 5)
+	Animations.StrongPunch:Play();
+	local now = os.clock()
+	while (os.clock() - now) < (AnimationData.StrongPunch.Start) do
+		ballofepic(0.01, Character["Right Arm"].CFrame * CFrame.new(0, -1, 0))
+		ballofepic(0.01, Character["Left Arm"].CFrame * CFrame.new(0, -1, 0))
+		Fwait()
+	end
+	Animations.StrongPunch:Stop();
 	Animations.Barrage:Play(0.1, 1, 3);
 	while (UserInputService:IsKeyDown(Enum.KeyCode.E)) do
 		ballofepic(0.01, Character["Right Arm"].CFrame * CFrame.new(0, -1, 0))
@@ -272,6 +292,8 @@ Attacks["p"] = function()
 	Sound(847061203, 1, 5)
 	Sound(239000203, 1, 2.5)
 	Sound(579687077, 0.75, 2.5)
+	Humanoid.WalkSpeed *= 2
+	wait(0.5);
 	ATTACK = false
 end
 
@@ -283,6 +305,19 @@ table.insert(Connections, UserInputService.InputBegan:Connect(function(Input)
 		local Attack = Attacks[Key];
 		if (not ATTACK and Attack) then
 			Attack();
+		end
+	end
+end))
+
+table.insert(Connections, Player.Chatted:Connect(function(msg)
+	if (msg:sub(1,3) == "/e ") then
+		msg = msg:sub(4)
+	end
+	if (msg:sub(1,1) == ";") then
+		msg = msg:sub(2);
+		local args = msg:split(" ");
+		if (args[1] == "playsound") then
+			Sound(tonumber(args[2]), (tonumber(args[3]) or 1), (tonumber(args[4]) or 10))
 		end
 	end
 end))
