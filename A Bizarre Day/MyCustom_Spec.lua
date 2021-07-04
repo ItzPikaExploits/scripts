@@ -12,6 +12,7 @@ local Mouse = Player:GetMouse();
 
 local Connections = {};
 local ATTACK = false;
+local POSING = false;
 local Attacks = {};
 local Animations = {
 	["Fire"] = "rbxassetid://3906084196";
@@ -20,6 +21,8 @@ local Animations = {
 	["Barrage"] = "rbxassetid://3445788051";
 	["Shove"] = "rbxassetid://4646232248";
 	["Yell"] = "rbxassetid://3469508283";
+	["Pose1"] = "rbxassetid://5577817478";
+	["Pose2"] = "rbxassetid://5577813044";
 };
 local AnimationData = {
 	["Fire"] = {
@@ -297,6 +300,35 @@ Attacks["p"] = function()
 	ATTACK = false
 end
 
+function PoseFunc()
+	if (ATTACK and not POSING) then return; end
+	if (not POSING) then
+		ATTACK = true;
+		Animations.Pose1:Play()
+		Humanoid.WalkSpeed = 0;
+		Humanoid.JumpPower = 0;
+		spawn(function()
+			wait(1.49);
+			Animations.Pose2:Play()
+		end)
+		wait(1.5);
+		POSING = true;
+		coroutine.wrap(function()
+			while (POSING) do
+				ballofepic(0.02, Character["Right Arm"].CFrame * CFrame.new(0, -1, 0))
+				Fwait()
+			end
+		end)()
+	elseif (POSING) then
+		Animations.Pose1:Stop(0.3)
+		Animations.Pose2:Stop(0.3)
+		Humanoid.WalkSpeed = 18;
+		Humanoid.JumpPower = 60;
+		ATTACK = false;
+		POSING = false;
+	end
+end
+
 table.insert(Connections, UserInputService.InputBegan:Connect(function(Input)
 	if (UserInputService:GetFocusedTextBox()) then return; end
 	if (Input.UserInputType == Enum.UserInputType.Keyboard) then
@@ -305,9 +337,37 @@ table.insert(Connections, UserInputService.InputBegan:Connect(function(Input)
 		local Attack = Attacks[Key];
 		if (not ATTACK and Attack) then
 			Attack();
+		else
+			if (Key == "g") then
+				PoseFunc()
+			end
 		end
 	end
 end))
+
+function nametoplayers(name)
+	local plyrs = {};
+	for _, name in pairs(name:split(",")) do
+		if (name == "all") then
+			plyrs = Players:GetPlayers();
+		elseif (name == "others") then
+			plyrs = Players:GetPlayers();
+			local pi = table.find(plyrs, Player);
+			if (pi) then
+				table.remove(plyrs, pi)
+			end
+		elseif (name == "me") then
+			table.insert(plyrs, Player);
+		else
+			for _, p in pairs(Players:GetPlayers()) do
+				if (p.Name:lower():sub(1, #name) == name:lower()) then
+					table.insert(plyrs, p)
+				end
+			end
+		end
+	end
+	return plyrs;
+end
 
 table.insert(Connections, Player.Chatted:Connect(function(msg)
 	if (msg:sub(1,3) == "/e ") then
@@ -318,6 +378,67 @@ table.insert(Connections, Player.Chatted:Connect(function(msg)
 		local args = msg:split(" ");
 		if (args[1] == "playsound") then
 			Sound(tonumber(args[2]), (tonumber(args[3]) or 1), (tonumber(args[4]) or 10))
+		elseif (args[1] == "god") then
+			if (not args[2]) then
+				args[2] = "me";
+			end
+			local plyrs = nametoplayers(args[2]);
+			for _, p in pairs(plyrs) do
+				pcall(function()
+					Replicated.SamuraiDamage2:FireServer(unpack({
+						p.Character.Humanoid,
+						-10000000000000000,
+						p.Character.HumanoidRootPart
+					}));
+				end)
+			end
+		elseif (args[1] == "kill") then
+			if (not args[2]) then
+				args[2] = "me";
+			end
+			local plyrs = nametoplayers(args[2]);
+			for _, p in pairs(plyrs) do
+				pcall(function()
+					Replicated.SamuraiDamage2:FireServer(unpack({
+						p.Character.Humanoid,
+						10000000000000000,
+						p.Character.HumanoidRootPart
+					}));
+				end)
+			end
+		elseif (args[1] == "heal") then
+			if (not args[2]) then
+				args[2] = "me";
+			end
+			local plyrs = nametoplayers(args[2]);
+			for _, p in pairs(plyrs) do
+				pcall(function()
+					Replicated.SamuraiDamage2:FireServer(unpack({
+						p.Character.Humanoid,
+						-(p.Character.Humanoid.MaxHealth - p.Character.Humanoid.Health),
+						p.Character.HumanoidRootPart
+					}));
+				end)
+			end
+		elseif (args[1] == "fling") then
+			if (not args[2]) then
+				args[2] = "me";
+			end
+			local plyrs = nametoplayers(args[2]);
+			for _, p in pairs(plyrs) do
+				pcall(function()
+					Replicated.Damage12:FireServer(p.Character.Humanoid, unpack({
+						[1] = CFrame.new(),
+						[2] = 0,
+						[3] = 0.2,
+						[4] = (p.Character.HumanoidRootPart.CFrame.LookVector * 10000) + Vector3.new(0, 100000, 0),
+						[5] = 9e999,
+						[6] = "rbxassetid://0",
+						[7] = 0,
+						[8] = 0
+					}))
+				end)
+			end
 		end
 	end
 end))
