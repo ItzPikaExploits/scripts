@@ -19,7 +19,7 @@ local Animations = {
 	["StrongPunch"] = "rbxassetid://3445806846";
 	["Barrage"] = "rbxassetid://3445788051";
 	["Shove"] = "rbxassetid://4646232248";
-
+	["Yell"] = "rbxassetid://3469508283";
 };
 local AnimationData = {
 	["Fire"] = {
@@ -32,12 +32,12 @@ local AnimationData = {
 	};
 	["StrongPunch"] = {
 		Start = 0.5;
-		EndDamage = 0.75;
+		EndDamage = 0.55;
 		End = 1;
 	};
 	["Shove"] = {
 		Start = 0.5;
-		EndDamage = 0.75;
+		EndDamage = 0.6;
 		End = 1;
 	};
 };
@@ -100,6 +100,21 @@ function Sound(id, pitch, volume, atpos)
 	Replicated.Damage12:FireServer(unpack(Args))
 end
 
+function ballofepic(size, atpos)
+	local Args = {
+		[1] = GetHumanoidForEffect(),
+		[2] = (atpos or Character.HumanoidRootPart.CFrame),
+		[3] = 0,
+		[4] = 0,
+		[5] = Vector3.new(),
+		[6] = size,
+		[7] = "rbxassetid://0", 
+		[8] = 0, 
+		[9] = 0
+	};
+	Replicated.Damage12:FireServer(unpack(Args))
+end
+
 Attacks["r"] = function()
 	ATTACK = true;
 	Animations.StrongPunch:Play();
@@ -108,6 +123,7 @@ Attacks["r"] = function()
 	local aStart = os.clock();
 	coroutine.wrap(function()
 		while (os.clock() - aStart) < AnimationData.StrongPunch.EndDamage do
+			ballofepic(0.01, Character["Right Arm"].CFrame * CFrame.new(0, -1, 0))
 			hito(Character["Right Arm"], 2, Replicated.Damage12, {
 				[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
 				[2] = 80,
@@ -131,15 +147,15 @@ Attacks["v"] = function()
 	ATTACK = true;
 	Animations.Shove:Play()
 	Sound(6938585744, 1, 5)
-	Fwait(AnimationData.Shove.Start)
 	local aStart = os.clock();
+	Fwait(AnimationData.Shove.Start)
 	coroutine.wrap(function()
 		while (os.clock() - aStart) < AnimationData.Shove.EndDamage do
 			hito(Character["Right Arm"], 2, Replicated.Damage12, {
 				[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
 				[2] = 80,
 				[3] = 0.2,
-				[4] = (Character.HumanoidRootPart.CFrame.LookVector * 200) + Vector3.new(0, 10, 0),
+				[4] = (Character.HumanoidRootPart.CFrame.LookVector * 1000) + Vector3.new(0, 500, 0),
 				[5] = 0.05,
 				[6] = "rbxassetid://3041190784",
 				[7] = math.random(75, 125)/100,
@@ -149,7 +165,7 @@ Attacks["v"] = function()
 				[1] = Character["Left Arm"].CFrame * CFrame.new(0, -1, 0),
 				[2] = 80,
 				[3] = 0.2,
-				[4] = (Character.HumanoidRootPart.CFrame.LookVector * 20) + Vector3.new(0, 10, 0),
+				[4] = (Character.HumanoidRootPart.CFrame.LookVector * 1000) + Vector3.new(0, 500, 0),
 				[5] = 0.05,
 				[6] = "rbxassetid://3041190784",
 				[7] = math.random(75, 125)/100,
@@ -157,6 +173,8 @@ Attacks["v"] = function()
 			}, 0.5, true, true);
 			Fwait();
 		end
+		ballofepic(0.03, Character["Right Arm"].CFrame * CFrame.new(0, -1, 0))
+		ballofepic(0.03, Character["Left Arm"].CFrame * CFrame.new(0, -1, 0))
 	end)()
 	while (os.clock() - aStart) < AnimationData.Shove.End do
 		Fwait();
@@ -169,6 +187,8 @@ Attacks["e"] = function()
 	Sound(6938602398, 1.5, 5)
 	Animations.Barrage:Play(0.1, 1, 3);
 	while (UserInputService:IsKeyDown(Enum.KeyCode.E)) do
+		ballofepic(0.01, Character["Right Arm"].CFrame * CFrame.new(0, -1, 0))
+		ballofepic(0.01, Character["Left Arm"].CFrame * CFrame.new(0, -1, 0))
 		Sound(4255432837, math.random(75, 125)/100, 2)
 		hito(Character["Right Arm"], 2, Replicated.Damage12, {
 			[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
@@ -195,6 +215,65 @@ Attacks["e"] = function()
 	Animations.Barrage:Stop();
 	ATTACK = false;
 end 
+
+Attacks["b"] = function()
+	ATTACK = true;
+	Sound(847061203, 1.5, 5)
+	Animations.Yell:Play(0.1, 1, 1);
+	wait(0.25);
+	Animations.Yell:AdjustSpeed(0)
+	local now = os.clock();
+	local lastbump = os.clock()
+	while (os.clock() - now) < 10 do
+		ballofepic(0.5)
+		if (os.clock() - lastbump) >= 0.5 then
+			lastbump = os.clock();
+			Sound(847061203, 1, 10);
+		end
+		Fwait();
+	end
+	Animations.Yell:AdjustSpeed(1)
+	for _, e in pairs(workspace.Entities:GetChildren()) do
+		coroutine.resume(coroutine.create(function()
+			local RootPart = e:FindFirstChild("HumanoidRootPart");
+			local Hum = e:FindFirstChild("Humanoid");
+			if (RootPart and Hum) and (e ~= Character) then
+				Replicated.SamuraiDamage2:FireServer(unpack({
+					Hum,
+					100000000000000,
+					RootPart
+				}));
+				Sound(741272936, 0.8, 10);
+			end
+		end))
+	end
+	for i = 1, 20 do
+		ballofepic(2)
+	end
+	Sound(741272936, 1, 10);
+	Sound(429123896, 1, 10);
+	Sound(1208650519, 1, 10);
+	ATTACK = false;
+end 
+
+Attacks["p"] = function()
+	ATTACK = true
+	Animations.Yell:Play(0.1, 1, 1);
+	wait(0.25)
+	for i = 1, 10 do
+		ballofepic(0.1)
+		Replicated.SamuraiDamage2:FireServer(unpack({
+			Humanoid,
+			-1000000000000,
+			Character.HumanoidRootPart
+		}))
+	end
+	Sound(206082327, 1, 2.5)
+	Sound(847061203, 1, 5)
+	Sound(239000203, 1, 2.5)
+	Sound(579687077, 0.75, 2.5)
+	ATTACK = false
+end
 
 table.insert(Connections, UserInputService.InputBegan:Connect(function(Input)
 	if (UserInputService:GetFocusedTextBox()) then return; end
@@ -259,3 +338,19 @@ end
 
 Humanoid.Died:Connect(Died);
 Character.AncestryChanged:Connect(Died);
+
+-- on Start
+Animations.Yell:Play(0.1, 1, 1);
+wait(0.25)
+for i = 1, 10 do
+	ballofepic(0.1)
+	Replicated.SamuraiDamage2:FireServer(unpack({
+		Humanoid,
+		-1000000000000,
+		Character.HumanoidRootPart
+	}))
+end
+Sound(206082327, 1, 2.5)
+Sound(847061203, 1, 5)
+Sound(239000203, 1, 2.5)
+Sound(579687077, 0.75, 2.5)
