@@ -17,7 +17,8 @@ local Animations = {
 	["Fire"] = "rbxassetid://3906084196";
 	["MirrorToss"] = "rbxassetid://3910283013";
 	["StrongPunch"] = "rbxassetid://3445806846";
-	
+	["Barrage"] = "rbxassetid://3445788051";
+
 };
 local AnimationData = {
 	["Fire"] = {
@@ -117,7 +118,40 @@ Attacks["v"] = function()
 	ATTACK = false;
 end 
 
+Attacks["e"] = function()
+	ATTACK = true;
+	Animations.Barrage:Play();
+	Fwait(AnimationData.StrongPunch.Start)
+	Sound(4255432837, math.random(75, 125)/100, 2)
+	while (UserInputService:IsKeyDown(Enum.KeyCode.E)) do
+		hito(Character["Right Arm"], 2, Replicated.Damage12, {
+			[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
+			[2] = 80,
+			[3] = 0.2,
+			[4] = (Character.HumanoidRootPart.CFrame.LookVector * 50) + Vector3.new(0, 10, 0),
+			[5] = 0.05,
+			[6] = "rbxassetid://3041190784",
+			[7] = math.random(75, 125)/100,
+			[8] = math.random(200, 400)/100
+		}, 0.05, true, false);
+		hito(Character["Left Arm"], 2, Replicated.Damage12, {
+			[1] = Character["Left Arm"].CFrame * CFrame.new(0, -1, 0),
+			[2] = 80,
+			[3] = 0.2,
+			[4] = (Character.HumanoidRootPart.CFrame.LookVector * 50) + Vector3.new(0, 10, 0),
+			[5] = 0.05,
+			[6] = "rbxassetid://3041190784",
+			[7] = math.random(75, 125)/100,
+			[8] = math.random(200, 400)/100
+		}, 0.05, true, false);
+		Fwait();
+	end
+	Animations.Barrage:Stop();
+	ATTACK = false;
+end 
+
 table.insert(Connections, UserInputService.InputBegan:Connect(function(Input)
+	if (UserInputService:GetFocusedTextBox()) then return; end
 	if (Input.UserInputType == Enum.UserInputType.Keyboard) then
 		local KeyCode = Input.KeyCode;
 		local Key = string.lower(KeyCode.Name);
