@@ -18,6 +18,7 @@ local Animations = {
 	["MirrorToss"] = "rbxassetid://3910283013";
 	["StrongPunch"] = "rbxassetid://3445806846";
 	["Barrage"] = "rbxassetid://3445788051";
+	["Shove"] = "rbxassetid://4646232248";
 
 };
 local AnimationData = {
@@ -30,6 +31,11 @@ local AnimationData = {
 		End = 1.25;
 	};
 	["StrongPunch"] = {
+		Start = 0.5;
+		EndDamage = 0.75;
+		End = 1;
+	};
+	["Shove"] = {
 		Start = 0.5;
 		EndDamage = 0.75;
 		End = 1;
@@ -91,7 +97,7 @@ function Sound(id, pitch, volume, atpos)
 	Replicated.Damage12:FireServer(unpack(Args))
 end
 
-Attacks["v"] = function()
+Attacks["r"] = function()
 	ATTACK = true;
 	Animations.StrongPunch:Play();
 	Fwait(AnimationData.StrongPunch.Start)
@@ -104,6 +110,43 @@ Attacks["v"] = function()
 				[2] = 80,
 				[3] = 0.2,
 				[4] = (Character.HumanoidRootPart.CFrame.LookVector * 50) + Vector3.new(0, 10, 0),
+				[5] = 0.05,
+				[6] = "rbxassetid://3041190784",
+				[7] = math.random(75, 125)/100,
+				[8] = math.random(200, 400)/100
+			}, 0.5, true, true);
+			Fwait();
+		end
+	end)()
+	while (os.clock() - aStart) < AnimationData.StrongPunch.End do
+		Fwait();
+	end
+	ATTACK = false;
+end 
+
+Attacks["v"] = function()
+	ATTACK = true;
+	Animations.StrongPunch:Play();
+	Fwait(AnimationData.StrongPunch.Start)
+	Sound(4255432837, math.random(75, 125)/100, 2)
+	local aStart = os.clock();
+	coroutine.wrap(function()
+		while (os.clock() - aStart) < AnimationData.StrongPunch.EndDamage do
+			hito(Character["Right Arm"], 2, Replicated.Damage12, {
+				[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
+				[2] = 80,
+				[3] = 0.2,
+				[4] = (Character.HumanoidRootPart.CFrame.LookVector * 200) + Vector3.new(0, 10, 0),
+				[5] = 0.05,
+				[6] = "rbxassetid://3041190784",
+				[7] = math.random(75, 125)/100,
+				[8] = math.random(200, 400)/100
+			}, 0.5, true, true);
+			hito(Character["Left Arm"], 2, Replicated.Damage12, {
+				[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
+				[2] = 80,
+				[3] = 0.2,
+				[4] = (Character.HumanoidRootPart.CFrame.LookVector * 20) + Vector3.new(0, 10, 0),
 				[5] = 0.05,
 				[6] = "rbxassetid://3041190784",
 				[7] = math.random(75, 125)/100,
