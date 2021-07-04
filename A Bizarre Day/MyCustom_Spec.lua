@@ -130,8 +130,8 @@ end
 Attacks["v"] = function()
 	ATTACK = true;
 	Animations.Shove:Play()
-	Sound(7014892600, 1, 10)
 	Fwait(AnimationData.Shove.Start)
+	Sound(6938585744, 1, 5)
 	local aStart = os.clock();
 	coroutine.wrap(function()
 		while (os.clock() - aStart) < AnimationData.Shove.EndDamage do
@@ -166,7 +166,7 @@ end
 
 Attacks["e"] = function()
 	ATTACK = true;
-	Sound(7014892600, 1, 10)
+	Sound(6938602398, 2, 5)
 	Animations.Barrage:Play();
 	Fwait(AnimationData.StrongPunch.Start)
 	while (UserInputService:IsKeyDown(Enum.KeyCode.E)) do
