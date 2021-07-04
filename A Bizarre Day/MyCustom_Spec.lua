@@ -126,12 +126,12 @@ end
 
 Attacks["v"] = function()
 	ATTACK = true;
-	Animations.StrongPunch:Play();
-	Fwait(AnimationData.StrongPunch.Start)
+	Animations.Shove:Play()
+	Fwait(AnimationData.Shove.Start)
 	Sound(4255432837, math.random(75, 125)/100, 2)
 	local aStart = os.clock();
 	coroutine.wrap(function()
-		while (os.clock() - aStart) < AnimationData.StrongPunch.EndDamage do
+		while (os.clock() - aStart) < AnimationData.Shove.EndDamage do
 			hito(Character["Right Arm"], 2, Replicated.Damage12, {
 				[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
 				[2] = 80,
@@ -143,7 +143,7 @@ Attacks["v"] = function()
 				[8] = math.random(200, 400)/100
 			}, 0.5, true, true);
 			hito(Character["Left Arm"], 2, Replicated.Damage12, {
-				[1] = Character["Right Arm"].CFrame * CFrame.new(0, -1, 0),
+				[1] = Character["Left Arm"].CFrame * CFrame.new(0, -1, 0),
 				[2] = 80,
 				[3] = 0.2,
 				[4] = (Character.HumanoidRootPart.CFrame.LookVector * 20) + Vector3.new(0, 10, 0),
@@ -155,7 +155,7 @@ Attacks["v"] = function()
 			Fwait();
 		end
 	end)()
-	while (os.clock() - aStart) < AnimationData.StrongPunch.End do
+	while (os.clock() - aStart) < AnimationData.Shove.End do
 		Fwait();
 	end
 	ATTACK = false;
