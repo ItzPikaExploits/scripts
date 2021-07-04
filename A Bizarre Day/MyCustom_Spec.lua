@@ -67,6 +67,7 @@ end
 
 function GetHumanoidForEffect()
 	local toReturn = nil;
+	--[[
 	for _, e in pairs(workspace.Entities:GetChildren()) do
 		if (Players:GetPlayerFromCharacter(e)) then -- Normal dummies cannot be used for effects.
 			if (e == Character) then
@@ -79,6 +80,8 @@ function GetHumanoidForEffect()
 			end
 		end
 	end
+	--]]
+	toReturn = Character.Humanoid;
 	return toReturn;
 end
 
@@ -128,7 +131,7 @@ Attacks["v"] = function()
 	ATTACK = true;
 	Animations.Shove:Play()
 	Fwait(AnimationData.Shove.Start)
-	Sound(4255432837, math.random(75, 125)/100, 2)
+	Sound(7014892600, 1, 10)
 	local aStart = os.clock();
 	coroutine.wrap(function()
 		while (os.clock() - aStart) < AnimationData.Shove.EndDamage do
