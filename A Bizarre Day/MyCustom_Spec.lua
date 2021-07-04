@@ -196,7 +196,7 @@ end
 
 Attacks["e"] = function()
 	ATTACK = true;
-	Sound(6938602398, 1.5, 5)
+	Sound(847061203, 1.1, 5)
 	Animations.StrongPunch:Play();
 	local now = os.clock()
 	while (os.clock() - now) < (AnimationData.StrongPunch.Start) do
