@@ -309,9 +309,10 @@ function PoseFunc()
 		Humanoid.JumpPower = 0;
 		spawn(function()
 			wait(1.49);
-			Animations.Pose2:Play()
+			--Animations.Pose2:Play()
 		end)
-		wait(1.5);
+		wait(1.6);
+		Animations.Pose1:AdjustSpeed(0)
 		POSING = true;
 		coroutine.wrap(function()
 			while (POSING) do
