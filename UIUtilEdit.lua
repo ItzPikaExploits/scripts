@@ -1616,14 +1616,6 @@ function library:Init()
 	end
 	self.base.Parent = game:GetService"CoreGui"
 	
-	self.cursor = self.cursor or self:Create("Frame", {
-		ZIndex = 100,
-		AnchorPoint = Vector2.new(0, 0),
-		Size = UDim2.new(0, 5, 0, 5),
-		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-		Parent = self.base
-	})
-	
 	for _, window in next, self.windows do
 		if window.canInit and not window.init then
 			window.init = true
@@ -1635,7 +1627,6 @@ end
 
 function library:Close()
 	self.open = not self.open
-	self.cursor.Visible = self.open
 	if self.activePopup then
 		self.activePopup:Close()
 	end
@@ -1662,10 +1653,6 @@ inputService.InputBegan:connect(function(input)
 end)
 
 inputService.InputChanged:connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseMovement and library.cursor then
-		local mouse = inputService:GetMouseLocation() + Vector2.new(0, -36)
-		library.cursor.Position = UDim2.new(0, mouse.X - 2, 0, mouse.Y - 2)
-	end
 	if input == dragInput and dragging then
 		update(input)
 	end
