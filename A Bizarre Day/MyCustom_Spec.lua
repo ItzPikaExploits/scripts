@@ -261,11 +261,20 @@ Attacks["b"] = function()
 			local RootPart = e:FindFirstChild("HumanoidRootPart");
 			local Hum = e:FindFirstChild("Humanoid");
 			if (RootPart and Hum) and (e ~= Character) then
-				Replicated.SamuraiDamage2:FireServer(unpack({
-					Hum,
-					100000000000000,
-					RootPart
-				}));
+							for i = 1, 100 do
+								local Args = {
+									[1] = Hum,
+									[2] = (RootPart.CFrame),
+									[3] = 80,
+									[4] = 0,
+									[5] = Vector3.new(),
+									[6] = 9e999,
+									[7] = "rbxassetid://0", 
+									[8] = 0, 
+									[9] = 0
+								};
+								Replicated.Damage12:FireServer(unpack(Args))
+							end
 				Sound(741272936, 0.8, 10);
 			end
 		end))
@@ -285,11 +294,6 @@ Attacks["p"] = function()
 	wait(0.25)
 	for i = 1, 10 do
 		ballofepic(0.1)
-		Replicated.SamuraiDamage2:FireServer(unpack({
-			Humanoid,
-			-1000000000000,
-			Character.HumanoidRootPart
-		}))
 	end
 	Sound(206082327, 1, 2.5)
 	Sound(847061203, 1, 5)
@@ -379,20 +383,6 @@ table.insert(Connections, Player.Chatted:Connect(function(msg)
 		local args = msg:split(" ");
 		if (args[1] == "playsound") then
 			Sound(tonumber(args[2]), (tonumber(args[3]) or 1), (tonumber(args[4]) or 10))
-		elseif (args[1] == "god") then
-			if (not args[2]) then
-				args[2] = "me";
-			end
-			local plyrs = nametoplayers(args[2]);
-			for _, p in pairs(plyrs) do
-				pcall(function()
-					Replicated.SamuraiDamage2:FireServer(unpack({
-						p.Character.Humanoid,
-						-10000000000000000,
-						p.Character.HumanoidRootPart
-					}));
-				end)
-			end
 		elseif (args[1] == "kill") then
 			if (not args[2]) then
 				args[2] = "me";
@@ -400,25 +390,20 @@ table.insert(Connections, Player.Chatted:Connect(function(msg)
 			local plyrs = nametoplayers(args[2]);
 			for _, p in pairs(plyrs) do
 				pcall(function()
-					Replicated.SamuraiDamage2:FireServer(unpack({
-						p.Character.Humanoid,
-						10000000000000000,
-						p.Character.HumanoidRootPart
-					}));
-				end)
-			end
-		elseif (args[1] == "heal") then
-			if (not args[2]) then
-				args[2] = "me";
-			end
-			local plyrs = nametoplayers(args[2]);
-			for _, p in pairs(plyrs) do
-				pcall(function()
-					Replicated.SamuraiDamage2:FireServer(unpack({
-						p.Character.Humanoid,
-						-(p.Character.Humanoid.MaxHealth - p.Character.Humanoid.Health),
-						p.Character.HumanoidRootPart
-					}));
+							for i = 1, 100 do
+								local Args = {
+									[1] = p.Character.Humanoid,
+									[2] = (p.Character.HumanoidRootPart.CFrame),
+									[3] = 80,
+									[4] = 0,
+									[5] = Vector3.new(),
+									[6] = 9e999,
+									[7] = "rbxassetid://0", 
+									[8] = 0, 
+									[9] = 0
+								};
+								Replicated.Damage12:FireServer(unpack(Args))
+							end
 				end)
 			end
 		elseif (args[1] == "fling") then
@@ -509,11 +494,6 @@ Animations.Yell:Play(0.1, 1, 1);
 wait(0.25)
 for i = 1, 10 do
 	ballofepic(0.1)
-	Replicated.SamuraiDamage2:FireServer(unpack({
-		Humanoid,
-		-1000000000000,
-		Character.HumanoidRootPart
-	}))
 end
 Sound(206082327, 1, 2.5)
 Sound(847061203, 1, 5)
