@@ -19,9 +19,9 @@ local searchItems = FIND_ITEMS:AddButton({
 	local _, err = pcall(function()
             local item = (function()
                 local toreturn = nil;
-                for _, c in pairs(workspace:FindFirstChild(tostring(TribeNumber)):GetChildren()) do
-                    if (c.Name == "Bush" and #c:GetChildren() > 0) then
-                        toreturn = c.Part.Part;
+                for _, c in pairs(workspace:FindFirstChild(tostring(TribeNumber)):GetDescendants()) do
+                    if (c.Name == "Part" and c:FindFirstChild("Part")) then
+                        toreturn = c.Part;
                     end
                 end
                 return toreturn
