@@ -16,6 +16,7 @@ local FIND_ITEMS = window:AddFolder("Item Searching");
 local searchItems = FIND_ITEMS:AddButton({ 
 	text = "Search for Advantage",
 	callback = function()
+	local _, err = pcall(function()
             local item = (function()
                 local toreturn = nil;
                 for _, c in pairs(workspace:FindFirstChild(tostring(TribeNumber)):GetChildren()) do
@@ -26,6 +27,8 @@ local searchItems = FIND_ITEMS:AddButton({
                 return toreturn
             end)()
             game.Players.LocalPlayer.Character.Humanoid:MoveTo(item.Position)
+	end)
+			if (err) then warn(err) end
 	end,
 });
 local TEAM_LABEL = FIND_ITEMS:AddLabel({text="MY TRIBE ISLAND IS..."})
