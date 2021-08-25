@@ -20,7 +20,7 @@ local searchItems = FIND_ITEMS:AddButton({
             local item = (function()
                 local toreturn = nil;
                 for _, c in pairs(workspace:FindFirstChild(tostring(TribeNumber)):GetDescendants()) do
-                    if (c.Name == "Part" and c:FindFirstChild("Part")) then
+                    if (c.Name == "Part" and c:IsA("Model") and c:FindFirstChild("Part")) then
                         toreturn = c.Part;
                     end
                 end
