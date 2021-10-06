@@ -1,5 +1,5 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/UIUtilEdit.lua"))()
-local notiflib = loadstring(game:HttpGet("https://raw.githubusercontent.com/OpenGamerTips/BaconLib/master/lib.lua"))()
+--local notiflib = loadstring(game:HttpGet("https://raw.githubusercontent.com/OpenGamerTips/BaconLib/master/lib.lua"))()
 local Players = game:GetService("Players");
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
@@ -21,7 +21,7 @@ local skeleton_esp = false;
 local Alpha = 0;
 
 function Notify(Text)
-	notiflib:CreateNotification("Nightmare's UI", Text)
+	--notiflib:CreateNotification("Nightmare's UI", Text)
 end
 
 local window = lib:CreateWindow("Nightmare's UI")
