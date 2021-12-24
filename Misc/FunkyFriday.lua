@@ -106,8 +106,6 @@ local fastWait, fastSpawn, fireSignal, rollChance do
 	end
 end
 
-local map = { [0] = 'Left', [1] = 'Down', [2] = 'Up', [3] = 'Right', }
-
 local keyCodeMap = {}
 for _, enum in next, Enum.KeyCode:GetEnumItems() do
 	keyCodeMap[enum.Value] = enum
@@ -124,7 +122,6 @@ local chanceValues = {
 	Bad = 77,
 }
 
-local marked = {}
 local hitChances = {}
 
 if shared._id then
@@ -148,16 +145,16 @@ runService:BindToRenderStep(shared._id, 1, function()
         local arrowData = framework.ArrowData[mode].Arrows
 
         for i = 1, #arrows do
-            	local arrow = arrows[i]
-		if type(arrow) ~= 'table' or (type(arrow.NoteDataConfigs) == 'table' and arrow.NoteDataConfigs.Type == 'Death') then
-			continue
-		end
+            local arrow = arrows[i]
+    		if type(arrow) ~= 'table' or (type(arrow.NoteDataConfigs) == 'table' and arrow.NoteDataConfigs.Type == 'Death') then
+    			continue;
+    		end
 
-		if (arrow.Side == framework.UI.CurrentSide) and (not marked[arrow]) and framework.SongPlayer.CurrentlyPlaying.TimePosition > 0 then 
-			local indice = (arrow.Data.Position % 4) -- mod 4 because 5%4 -> 0, 6%4 = 1, etc
-			local position = map[indice]
-			
-			if (position) then
+		if (arrow.Side == framework.UI.CurrentSide) and (not arrow.Marked) and framework.SongPlayer.CurrentlyPlaying.TimePosition > 0 then 
+		    local indice = (arrow.Data.Position % count)
+			local position = indice 
+		    
+		    if (position) then
 				local currentTime = framework.SongPlayer.CurrentlyPlaying.TimePosition
 				local distance = (1 - math.abs(arrow.Data.Time - currentTime)) * 100
 
@@ -171,9 +168,9 @@ runService:BindToRenderStep(shared._id, 1, function()
 
 				-- if (not chanceValues[hitChance]) then warn('invalid chance', hitChance) end
 				if distance >= chanceValues[hitChance] then
-					marked[arrow] = true;
+					arrow.Marked = true;
 					
-                            		local keyCode = keyCodeMap[arrowData[position].Keybinds.Keyboard[1]] -- ty wally bb
+                    local keyCode = keyCodeMap[arrowData[tostring(position)].Keybinds.Keyboard[1]] -- ty wally bb
 						
 					fireSignal(scrollHandler, userInputService.InputBegan, { KeyCode = keyCode, UserInputType = Enum.UserInputType.Keyboard }, false)
 
@@ -185,7 +182,7 @@ runService:BindToRenderStep(shared._id, 1, function()
 					end
 
 					fireSignal(scrollHandler, userInputService.InputEnded, { KeyCode = keyCode, UserInputType = Enum.UserInputType.Keyboard }, false)
-					marked[arrow] = false;
+					arrow.Marked = false;
 				end
 			end
 		end
