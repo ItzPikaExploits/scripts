@@ -1,6 +1,9 @@
--- dont steal my scripts 
--- kamily#0001
--- edited by: loafa#9444
+--[[
+    Jan - UI Library
+    wally - Script & Multi-Key Support
+    Sezei - Contributor
+    loafa - UI Toggle & Sustain Timings
+--]]
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/UIUtilEdit.lua"))()
 
@@ -111,10 +114,6 @@ for _, enum in next, Enum.KeyCode:GetEnumItems() do
 	keyCodeMap[enum.Value] = enum
 end
 
-local keys = { Up = Enum.KeyCode.Up; Down = Enum.KeyCode.Down; Left = Enum.KeyCode.Left; Right = Enum.KeyCode.Right; }
-
--- they are "weird" because they are in the middle of their Upper & Lower ranges 
--- should hopefully make them more precise!
 local chanceValues = {
 	Sick = 96,
 	Good = 92,
@@ -122,67 +121,93 @@ local chanceValues = {
 	Bad = 77,
 }
 
-local hitChances = {}
+if shared._unload then
+    pcall(shared._unload)
+end
 
-if shared._id then
-	pcall(runService.UnbindFromRenderStep, runService, shared._id)
+function shared._unload()
+    if (shared._id) then
+        pcall(runService.UnbindFromRenderStep, runService, shared._id)
+    end
+    
+    if library.open then
+        library:Close()
+    end
+    
+    library.base:ClearAllChildren()
+    library.base:Destroy()
 end
 
 shared._id = game:GetService('HttpService'):GenerateGUID(false)
 runService:BindToRenderStep(shared._id, 1, function()
 	if (not library.flags.autoPlayer) then return end
-        if typeof(framework.SongPlayer.CurrentlyPlaying) ~= 'Instance' then return end
-        if framework.SongPlayer.CurrentlyPlaying.ClassName ~= 'Sound' then return end
+    if typeof(framework.SongPlayer.CurrentlyPlaying) ~= 'Instance' then return end
+    if framework.SongPlayer.CurrentlyPlaying.ClassName ~= 'Sound' then return end
 
-        local arrows = {}
-        for _, obj in next, framework.UI.ActiveSections do
-            arrows[#arrows + 1] = obj;
-        end
+    local arrows = {}
+    for _, obj in next, framework.UI.ActiveSections do
+        arrows[#arrows + 1] = obj;
+    end
 
-        local count = framework.SongPlayer:GetKeyCount()
-        local mode = count .. 'Key'
+    local count = framework.SongPlayer:GetKeyCount()
+    local mode = count .. 'Key'
 
-        local arrowData = framework.ArrowData[mode].Arrows
+    local arrowData = framework.ArrowData[mode].Arrows
 
-        for i = 1, #arrows do
-            local arrow = arrows[i]
-    		if type(arrow) ~= 'table' or (type(arrow.NoteDataConfigs) == 'table' and arrow.NoteDataConfigs.Type == 'Death') then
-    			continue;
-    		end
+    for i = 1, #arrows do
+        local arrow = arrows[i]
+		if type(arrow) ~= 'table' or (type(arrow.NoteDataConfigs) == 'table' and arrow.NoteDataConfigs.Type == 'Death') then
+			continue;
+		end
 
 		if (arrow.Side == framework.UI.CurrentSide) and (not arrow.Marked) and framework.SongPlayer.CurrentlyPlaying.TimePosition > 0 then 
 		    local indice = (arrow.Data.Position % count)
 			local position = indice 
 		    
 		    if (position) then
-				local currentTime = framework.SongPlayer.CurrentlyPlaying.TimePosition
-				local distance = (1 - math.abs(arrow.Data.Time - currentTime)) * 100
+                local hitboxOffset = 0; do
+                    local Settings = framework.Settings;
+                    local Offset = (typeof(Settings) == "table") and Settings.HitboxOffset;
+                    local Value = (typeof(Offset) == "table") and Offset.Value;
+                    
+                    if (typeof(Value) == "number") then hitboxOffset = Value; end
+                    
+                    hitboxOffset /= 1000
+                end
+                
+                local songTime = framework.SongPlayer.CurrentTime; do
+                    local Configs = framework.SongPlayer.CurrentSongConfigs;
+                    local pbs = (typeof(Configs) == "table") and Configs.PlaybackSpeed;
+                    
+                    if (typeof(pbs) ~= "number") then pbs = 1; end
+                    
+                    songTime = songTime / pbs;
+                end
 
-				if (arrow.Data.Time == 0) then
-				--	print('invisible', tableToString(arrow.Data), i, distance)
-					continue
-				end
+                local noteTime = math.clamp((1 - math.abs(arrow.Data.Time - (songTime + hitboxOffset))) * 100, 0, 100)
 
-				local hitChance = hitChances[arrow] or rollChance()
-				hitChances[arrow] = hitChance
+				local hitChance = arrow._hitChance or rollChance();
+				arrow._hitChance = hitChance;
 
 				-- if (not chanceValues[hitChance]) then warn('invalid chance', hitChance) end
-				if distance >= chanceValues[hitChance] then
-					arrow.Marked = true;
-					
-                    local keyCode = keyCodeMap[arrowData[tostring(position)].Keybinds.Keyboard[1]] -- ty wally bb
-						
-					fireSignal(scrollHandler, userInputService.InputBegan, { KeyCode = keyCode, UserInputType = Enum.UserInputType.Keyboard }, false)
-
-					-- wait depending on the arrows length so the animation can play
-					if arrow.Data.Length > 0 then
-						fastWait(arrow.Data.Length)
-					else
-						fastWait(library.flags.sustainLength/1000) -- customizeable pog
-					end
-
-					fireSignal(scrollHandler, userInputService.InputEnded, { KeyCode = keyCode, UserInputType = Enum.UserInputType.Keyboard }, false)
-					arrow.Marked = false;
+				if (arrow._hitChance ~= "Miss") and (noteTime >= chanceValues[arrow._hitChance]) then
+				    fastSpawn(function()
+    					arrow.Marked = true;
+    					
+                        local keyCode = keyCodeMap[arrowData[tostring(position)].Keybinds.Keyboard[1]] -- ty wally bb
+    						
+    					fireSignal(scrollHandler, userInputService.InputBegan, { KeyCode = keyCode, UserInputType = Enum.UserInputType.Keyboard }, false)
+    
+    					-- wait depending on the arrows length so the animation can play
+    					if arrow.Data.Length > 0 then
+    						fastWait(arrow.Data.Length)
+    					else
+    						fastWait(library.flags.sustainLength/1000) -- customizeable pog
+    					end
+    
+    					fireSignal(scrollHandler, userInputService.InputEnded, { KeyCode = keyCode, UserInputType = Enum.UserInputType.Keyboard }, false)
+    					arrow.Marked = false;
+    				end)
 				end
 			end
 		end
@@ -211,12 +236,13 @@ local window = library:CreateWindow('Funky Friday') do
 
 	local folder = window:AddFolder('Options & Credits') do
 		folder:AddButton({ text = "Close", callback = function()
-		    library:Close()
+		    pcall(shared._unload)
 		    uiToggle:Disconnect()
 		end})
-		folder:AddLabel({ text = 'kamily#0001' })
-		folder:AddLabel({ text = 'Jan - UI library' })
-		folder:AddLabel({ text = 'loafa - UI Close/Toggle + Sustain' })
+		folder:AddLabel({ text = 'Jan - UI Library' })
+		folder:AddLabel({ text = 'wally - OG Script' })
+		folder:AddLabel({ text = 'Sezei - Contributor' })
+		folder:AddLabel({ text = 'loafa - Extra Bits' }) -- ex. Sustain, toggle, etc.
 	end
 end
 
