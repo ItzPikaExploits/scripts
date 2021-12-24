@@ -107,6 +107,12 @@ local fastWait, fastSpawn, fireSignal, rollChance do
 end
 
 local map = { [0] = 'Left', [1] = 'Down', [2] = 'Up', [3] = 'Right', }
+
+local keyCodeMap = {}
+for _, enum in next, Enum.KeyCode:GetEnumItems() do
+	keyCodeMap[enum.Value] = enum
+end
+
 local keys = { Up = Enum.KeyCode.Up; Down = Enum.KeyCode.Down; Left = Enum.KeyCode.Left; Right = Enum.KeyCode.Right; }
 
 -- they are "weird" because they are in the middle of their Upper & Lower ranges 
@@ -128,9 +134,26 @@ end
 shared._id = game:GetService('HttpService'):GenerateGUID(false)
 runService:BindToRenderStep(shared._id, 1, function()
 	if (not library.flags.autoPlayer) then return end
+        if typeof(framework.SongPlayer.CurrentlyPlaying) ~= 'Instance' then return end
+        if framework.SongPlayer.CurrentlyPlaying.ClassName ~= 'Sound' then return end
 
-	for i, arrow in next, framework.UI.ActiveSections do
-		if (arrow.Side == framework.UI.CurrentSide) and (not marked[arrow]) then 
+        local arrows = {}
+        for _, obj in next, framework.UI.ActiveSections do
+            arrows[#arrows + 1] = obj;
+        end
+
+        local count = framework.SongPlayer:GetKeyCount()
+        local mode = count .. 'Key'
+
+        local arrowData = framework.ArrowData[mode].Arrows
+
+        for i = 1, #arrows do
+            	local arrow = arrows[i]
+		if type(arrow) ~= 'table' or (type(arrow.NoteDataConfigs) == 'table' and arrow.NoteDataConfigs.Type == 'Death') then
+			continue
+		end
+
+		if (arrow.Side == framework.UI.CurrentSide) and (not marked[arrow]) and framework.SongPlayer.CurrentlyPlaying.TimePosition > 0 then 
 			local indice = (arrow.Data.Position % 4) -- mod 4 because 5%4 -> 0, 6%4 = 1, etc
 			local position = map[indice]
 			
@@ -149,16 +172,19 @@ runService:BindToRenderStep(shared._id, 1, function()
 				-- if (not chanceValues[hitChance]) then warn('invalid chance', hitChance) end
 				if distance >= chanceValues[hitChance] then
 					marked[arrow] = true;
-					fireSignal(scrollHandler, userInputService.InputBegan, { KeyCode = keys[position], UserInputType = Enum.UserInputType.Keyboard }, false)
+					
+                            		local keyCode = keyCodeMap[arrowData[position].Keybinds.Keyboard[1]] -- ty wally bb
+						
+					fireSignal(scrollHandler, userInputService.InputBegan, { KeyCode = keyCode, UserInputType = Enum.UserInputType.Keyboard }, false)
 
 					-- wait depending on the arrows length so the animation can play
 					if arrow.Data.Length > 0 then
 						fastWait(arrow.Data.Length)
 					else
-						fastWait(library.flags.sustainLength/1000) -- 0.1 seems to make it miss more, this should be fine enough?
+						fastWait(library.flags.sustainLength/1000) -- customizeable pog
 					end
 
-					fireSignal(scrollHandler, userInputService.InputEnded, { KeyCode = keys[position], UserInputType = Enum.UserInputType.Keyboard }, false)
+					fireSignal(scrollHandler, userInputService.InputEnded, { KeyCode = keyCode, UserInputType = Enum.UserInputType.Keyboard }, false)
 					marked[arrow] = false;
 				end
 			end
