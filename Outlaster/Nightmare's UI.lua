@@ -1,8 +1,8 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/UIUtilEdit.lua"))()
-local notiflib = loadstring(game:HttpGet("https://raw.githubusercontent.com/OpenGamerTips/BaconLib/master/lib.lua"))()
+--local notiflib = loadstring(game:HttpGet("https://raw.githubusercontent.com/OpenGamerTips/BaconLib/master/lib.lua"))()
 
 function Notify(Text)
-	notiflib:CreateNotification("Nightmare's UI", Text)
+	--notiflib:CreateNotification("Nightmare's UI", Text)
 end
 
 local Players = game:GetService("Players")
