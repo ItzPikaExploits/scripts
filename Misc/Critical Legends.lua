@@ -1,3 +1,6 @@
+-- credit: https://v3rmillion.net/showthread.php?tid=1154044&__cf_chl_f_tk=pW99FiDICR06Ir31S1ZII6M2fdfGez27AUMTAGZB20Q-1642562547-0-gaNycGzNCb0
+-- edited to get chests works
+
 -- LOAD GUI & LIBRARY (Wally Lib) --
 local library = loadstring(game:HttpGet("https://pastebin.com/raw/CkyR8ePz", true))()
 
