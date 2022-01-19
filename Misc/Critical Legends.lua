@@ -91,7 +91,7 @@ local chest = farm:Button('Grab Chests', function()
     local chests = game.Workspace.Chests:GetChildren()
     for i,v in pairs(chests) do
         if not v:FindFirstChild("Open") then
-            plr.Character.HumanoidRootPart.CFrame = v.Giver.CFrame
+            Plr.Character.HumanoidRootPart.CFrame = v.Giver.CFrame
         end
         wait(0.5)
     end
