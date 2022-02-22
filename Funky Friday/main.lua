@@ -223,9 +223,9 @@ local uiToggle = userInputService.InputBegan:Connect(function(Input)
     end
 end)
 
-local window = library:CreateWindow('Funky Friday') do
-	local folder = window:AddFolder('Main') do
-		folder:AddToggle({ text = 'Autoplayer', flag = 'autoPlayer' })
+local window = library:CreateWindow('Main') do
+	local folder = window:AddFolder('Autoplayer') do
+		folder:AddToggle({ text = 'Enabled', flag = 'autoPlayer' })
 
 		folder:AddSlider({ text = 'Sick %', flag = 'sickChance', min = 0, max = 100, value = 100 })
 		folder:AddSlider({ text = 'Good %', flag = 'goodChance', min = 0, max = 100, value = 0 })
@@ -233,17 +233,33 @@ local window = library:CreateWindow('Funky Friday') do
 		folder:AddSlider({ text = 'Bad %', flag = 'badChance', min = 0, max = 100, value = 0 })
 		folder:AddSlider({ text = 'Sustain (ms)', flag = 'sustainLength', min = 0, max = 100, value = 25 })
 	end
-
-	local folder = window:AddFolder('Options & Credits') do
-		folder:AddButton({ text = "Close", callback = function()
-		    pcall(shared._unload)
-		    uiToggle:Disconnect()
+	local folder = window:AddFolder('Other') do
+		local instantStagePromptsCB = nil;
+		folder:AddButton({ text = 'Instant Stage Prompts', callback = function()
+			if (not instantStagePromptsCB) then
+				function CheckInstance(d)
+					if (d:IsA("ProximityPrompt") and d.HoldDuration > 0) then
+						d.HoldDuration = 0;
+					end
+				end
+				for _, d in pairs(workspace.Map.Stages:GetDescendants()) do
+					coroutine.wrap(CheckInstance)(d)
+				end
+				instantStagePromptsCB = workspace.Map.Stages.DescendantAdded:Connect(CheckInstance)
+			end
 		end})
-		folder:AddLabel({ text = 'Jan - UI Library' })
-		folder:AddLabel({ text = 'wally - OG Script' })
-		folder:AddLabel({ text = 'Sezei - Contributor' })
-		folder:AddLabel({ text = 'loafa - Extra Bits' }) -- ex. Sustain, toggle, etc.
 	end
+end
+
+local window = library:CreateWindow('Options & Credits') do
+	window:AddButton({ text = "Close", callback = function()
+	    pcall(shared._unload)
+	    uiToggle:Disconnect()
+	end})
+	window:AddLabel({ text = 'Jan - UI Library' })
+	window:AddLabel({ text = 'wally - OG Script' })
+	window:AddLabel({ text = 'Sezei - Contributor' })
+	window:AddLabel({ text = 'loafa - Extra Bits' }) -- ex. Sustain, toggle, etc.
 end
 
 library:Init()
