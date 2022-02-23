@@ -20,6 +20,13 @@ local function DrawLine()
 	return l
 end
 
+function getCharFromName(name)
+	return workspace.MapFolder.Players:FindFirstChild(name);
+end
+function getPlayerFromChar(char)
+	return Players:FindFirstChild(char.Name);
+end
+
 local function DrawESP(char)
 	local name = char.Name;
 	local limbs = {
@@ -60,7 +67,7 @@ local function DrawESP(char)
 		connection = RunService.RenderStepped:Connect(function()
 			local MapFolder = workspace:FindFirstChild("MapFolder");
 			if (not MapFolder) then return; end
-			local plr = Players:FindFirstChild(name)
+			local plr = getPlayerFromChar(char)
 			if (plr) then
 				Colorize((plr.SelectedTeam.Value == Player.SelectedTeam.Value) and Color3.new(0, 0.733333, 1) or Color3.new(1, 0.294118, 0.294118))
 			end
@@ -180,7 +187,7 @@ local conn = workspace.MapFolder.Players.ChildAdded:Connect(check)
 local toAIM = nil;
 
 function AimAt(PART)
-	Camera.CFrame = CFrame.new(Camera.CFrame.p, PART.CFrame.p)
+	Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.p, PART.CFrame.p), 0.3)
 end
 function getFOVXYZ(P0, P1, DEGREE)
 	local X1, Y1, Z1 = P0:ToOrientation()
@@ -196,30 +203,23 @@ function checkFOV(PART)
 	local ANGLE = math.abs(FOV.X) + math.abs(FOV.Y)
 	return ANGLE;
 end
+function easeOutQuad(x: number)
+	return 1 - (1 - x) * (1 - x);
+end
 
-Mouse.KeyDown:Connect(function(KEY)
+local msconn = Mouse.KeyDown:Connect(function(KEY)
 	KEY = KEY:lower()
 	if (KEY == "e") then
 		if not toAIM then
 			local MAXANGLE = math.rad(20)
-			for _, PLAYER in pairs(Players:GetChildren()) do
-				if PLAYER.Name ~= Player.Name and 
-					PLAYER.Character and 
-					PLAYER.Character.Head and 
-					PLAYER.Character.Humanoid and 
-					PLAYER.Character.Humanoid.Health > 1 then
-					if PLAYER.SelectedTeam.Value ~= Player.SelectedTeam.Value then
-						local AN = checkFOV(PLAYER.Character.Head)
-						if AN < MAXANGLE then
-							MAXANGLE = AN
-							toAIM = PLAYER.Character.Head
-						end
-					end
-					PLAYER.Character.Humanoid.Died:Connect(function()
-						if toAIM.Parent == PLAYER.Character or toAIM == nil then
-							toAIM = nil
-						end
-					end)
+			for _, char in pairs(workspace.MapFolder.Players:GetChildren()) do
+				local PLAYER = getPlayerFromChar(char);
+				if (PLAYER and char.Name == Player.Name) then continue; end
+				if (PLAYER.SelectedTeam.Value == Player.SelectedTeam.Value) then continue; end
+				local AN = checkFOV(char.Head)
+				if AN < MAXANGLE then
+					MAXANGLE = AN
+					toAIM = char.Head
 				end
 			end
 		else
@@ -231,7 +231,7 @@ end)
 local rsconn = RunService.RenderStepped:Connect(function()
 	if (toAIM) then
 		AimAt(toAIM)
-		if toAIM.Parent == Player.Character then
+		if (toAIM:IsDescendantOf(getCharFromName(Player.Name))) then
 			toAIM = nil
 		end
 	end
@@ -239,6 +239,8 @@ end)
 
 shared[id] = true;
 shared._unload = function()
-	conn:Disconnect()
 	shared[id] = nil;
+	conn:Disconnect();
+	rsconn:Disconnect();
+	msconn:Disconnect();
 end
