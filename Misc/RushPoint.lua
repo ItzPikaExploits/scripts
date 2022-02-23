@@ -56,12 +56,14 @@ local function DrawESP(char)
 
 	local function UpdaterR15()
 		local connection
-		connection = game:GetService("RunService").RenderStepped:Connect(function()
+		connection = RunService.RenderStepped:Connect(function()
+			local MapFolder = workspace:FindFirstChild("MapFolder");
+			if (not MapFolder) then return; end
 			local plr = Players:FindFirstChild(name)
 			if (plr) then
 				Colorize((plr.SelectedTeam.Value == Player.SelectedTeam.Value) and Color3.new(0, 0.733333, 1) or Color3.new(1, 0.294118, 0.294118))
 			end
-			if shared[id] and char ~= nil and char:FindFirstChild("Humanoid") ~= nil and char:FindFirstChild("HumanoidRootPart") ~= nil and char.Humanoid.Health > 0 then
+			if shared[id] and char ~= nil and char.Parent == MapFolder.Players and char:FindFirstChild("Humanoid") ~= nil and char:FindFirstChild("HumanoidRootPart") ~= nil and char.Humanoid.Health > 0 then
 				local HUM, vis = Camera:WorldToViewportPoint(char.HumanoidRootPart.Position)
 				if vis then
 					-- Head
