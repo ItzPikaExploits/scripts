@@ -3,6 +3,7 @@ local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 
 local Player = Players.LocalPlayer;
+local Mouse = Player:GetMouse()
 
 local Camera = workspace.CurrentCamera;
 
@@ -175,6 +176,66 @@ for _, c in pairs(workspace.MapFolder.Players:GetChildren()) do
 	check(c)
 end
 local conn = workspace.MapFolder.Players.ChildAdded:Connect(check)
+
+local toAIM = nil;
+
+function AimAt(PART)
+	Camera.CFrame = CFrame.new(Camera.CFrame.p, PART.CFrame.p)
+end
+function getFOVXYZ(P0, P1, DEGREE)
+	local X1, Y1, Z1 = P0:ToOrientation()
+	local cf = CFrame.new(P0.p, P1.p)
+	local X2, Y2, Z2 = cf:ToOrientation()
+	if DEGREE then
+	else
+		return Vector3.new((X1 - X2), (Y1 - Y2), (Z1 - Z2))
+	end
+end
+function checkFOV(PART)
+	local FOV = getFOVXYZ(Camera.CFrame, PART.CFrame)
+	local ANGLE = math.abs(FOV.X) + math.abs(FOV.Y)
+	return ANGLE;
+end
+
+Mouse.KeyDown:Connect(function(KEY)
+	KEY = KEY:lower()
+	if (KEY == "e") then
+		if not toAIM then
+			local MAXANGLE = math.rad(20)
+			for _, PLAYER in pairs(Players:GetChildren()) do
+				if PLAYER.Name ~= Player.Name and 
+					PLAYER.Character and 
+					PLAYER.Character.Head and 
+					PLAYER.Character.Humanoid and 
+					PLAYER.Character.Humanoid.Health > 1 then
+					if PLAYER.SelectedTeam.Value ~= Player.SelectedTeam.Value then
+						local AN = checkFOV(PLAYER.Character.Head)
+						if AN < MAXANGLE then
+							MAXANGLE = AN
+							toAIM = PLAYER.Character.Head
+						end
+					end
+					PLAYER.Character.Humanoid.Died:Connect(function()
+						if toAIM.Parent == PLAYER.Character or toAIM == nil then
+							toAIM = nil
+						end
+					end)
+				end
+			end
+		else
+			toAIM = nil
+		end
+	end
+end)
+
+local rsconn = RunService.RenderStepped:Connect(function()
+	if (toAIM) then
+		AimAt(toAIM)
+		if toAIM.Parent == Player.Character then
+			toAIM = nil
+		end
+	end
+end)
 
 shared[id] = true;
 shared._unload = function()
