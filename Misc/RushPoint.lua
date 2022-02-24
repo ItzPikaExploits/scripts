@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
+local StarterGui = game:GetService("StarterGui")
 
 local Player = Players.LocalPlayer;
 local Mouse = Player:GetMouse()
@@ -18,6 +19,14 @@ local function DrawLine()
 	l.Thickness = 0.5
 	l.Transparency = 1
 	return l
+end
+
+function Notify(text, duration)
+	StarterGui:SetCore("SendNotification", {
+		Title = "RUSH-B",
+		Text = text,
+		Duration = (duration or 2)
+	})
 end
 
 function getCharFromName(name)
@@ -185,9 +194,10 @@ end
 local conn = workspace.MapFolder.Players.ChildAdded:Connect(check)
 
 local toAIM = nil;
+local snappy = false;
 
 function AimAt(PART)
-	Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.p, PART.CFrame.p), 0.3)
+	Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.p, PART.CFrame.p), (snappy and 1 or 0.3))
 end
 function getFOVXYZ(P0, P1, DEGREE)
 	local X1, Y1, Z1 = P0:ToOrientation()
@@ -225,6 +235,9 @@ local msconn = Mouse.KeyDown:Connect(function(KEY)
 		else
 			toAIM = nil
 		end
+	elseif (KEY == "c") then
+		snappy = not snappy;
+		Notify("Aimbot Mode: ".. (snappy and "Snap" or "Smooth"))
 	end
 end)
 
