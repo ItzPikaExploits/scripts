@@ -71,7 +71,7 @@ local searchItems = FIND_ITEMS:AddButton({
 			if (err) then warn(err) end
 	end,
 });
-local searchItems = FIND_ITEMS:AddButton({ 
+local blaclistItems = FIND_ITEMS:AddButton({ 
 	text = "Blacklist False Advantage",
 	callback = function()
 	local _, err = pcall(function()
