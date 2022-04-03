@@ -46,9 +46,33 @@ local function GetTeam()
     return CurrentIsland and tonumber(CurrentIsland.Name);
 end
 
+local Blacklist = {}
+
 local FIND_ITEMS = window:AddFolder("Item Searching");
 local searchItems = FIND_ITEMS:AddButton({ 
 	text = "Search for Advantage",
+	callback = function()
+	local _, err = pcall(function()
+            local item = (function()
+                local toreturn = nil;
+                for _, c in pairs(workspace:FindFirstChild(tostring(TribeNumber)):GetDescendants()) do
+                    if (c.Name == "Part" and c:IsA("Model") and c:FindFirstChild("Part") and not table.find(Blacklist, c.Part)) then
+                        toreturn = c.Part;
+                    end
+                end
+                return toreturn
+            end)()
+            if (item) then
+                Player.Character.Humanoid:MoveTo(item.Position)
+            else
+                Notify("No advantages on your island!")
+            end
+	end)
+			if (err) then warn(err) end
+	end,
+});
+local searchItems = FIND_ITEMS:AddButton({ 
+	text = "Blacklist False Advantage",
 	callback = function()
 	local _, err = pcall(function()
             local item = (function()
@@ -61,7 +85,7 @@ local searchItems = FIND_ITEMS:AddButton({
                 return toreturn
             end)()
             if (item) then
-                Player.Character.Humanoid:MoveTo(item.Position)
+                table.insert(Blacklist, item)
             else
                 Notify("No advantages on your island!")
             end
