@@ -71,7 +71,7 @@ local searchItems = FIND_ITEMS:AddButton({
 			if (err) then warn(err) end
 	end,
 });
-local blaclistItems = FIND_ITEMS:AddButton({ 
+local blacklistItems = FIND_ITEMS:AddButton({ 
 	text = "Blacklist False Advantage",
 	callback = function()
 	local _, err = pcall(function()
@@ -91,6 +91,12 @@ local blaclistItems = FIND_ITEMS:AddButton({
             end
 	end)
 			if (err) then warn(err) end
+	end,
+});
+local clearblacklistItems = FIND_ITEMS:AddButton({ 
+	text = "Clear Blacklist",
+	callback = function()
+		Blacklist = {}
 	end,
 });
 local TEAM_LABEL = FIND_ITEMS:AddLabel({text="MY TRIBE ISLAND IS..."})
