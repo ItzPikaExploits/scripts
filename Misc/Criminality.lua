@@ -84,6 +84,8 @@ RunService:BindToRenderStep(shared._id, 1, function()
 				local vector, onScreen = Camera:WorldToScreenPoint(worldPoint)
 				local screenPoint = Vector2.new(vector.X, vector.Y)
 				
+				if (not onScreen) then continue end
+				
 				local magn = (screenPoint - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
 				
 				if (magn < library.flags.fovSize) then
