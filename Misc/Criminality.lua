@@ -115,7 +115,7 @@ RunService:BindToRenderStep(shared._id, 1, function()
 			if (head and hrp) then
 				local magn = (RootPart.Position - hrp.Position).Magnitude;
 				local distanceMultiplier = (magn / 100);
-				Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/10) * distanceMultiplier))
+				Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
 			end
 		end
 	end
