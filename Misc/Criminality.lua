@@ -134,17 +134,18 @@ RunService:BindToRenderStep(shared._id, 1, function()
 				Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
 			end
 		end
-		if (library.flags.sprintWalk) then
-			local Sprinting = Replicated.CharStats[Player.Name].Sprinting;
-			if (not ActiveConnections.sprintWalk or not ActiveConnections.sprintWalk.Connected) then
-				ActiveConnections.sprintWalk = Sprinting.Changed:Connect(function()
-					Sprinting.Value = false
-				end)
-			end
-		else
-			if (ActiveConnections.sprintWalk and ActiveConnections.sprintWalk.Connected) then
-				ActiveConnections.sprintWalk:Disconnect()
-			end
+	end
+	
+	if (library.flags.sprintWalk) then
+		local Sprinting = Replicated.CharStats[Player.Name].Sprinting;
+		if (not ActiveConnections.sprintWalk or not ActiveConnections.sprintWalk.Connected) then
+			ActiveConnections.sprintWalk = Sprinting.Changed:Connect(function()
+				Sprinting.Value = false
+			end)
+		end
+	else
+		if (ActiveConnections.sprintWalk and ActiveConnections.sprintWalk.Connected) then
+			ActiveConnections.sprintWalk:Disconnect()
 		end
 	end
 
