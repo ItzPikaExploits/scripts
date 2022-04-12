@@ -136,7 +136,15 @@ RunService:BindToRenderStep(shared._id, 1, function()
 		end
 		if (library.flags.sprintWalk) then
 			local Sprinting = Replicated.CharStats[Player.Name].Sprinting;
-			Sprinting.Value = false;
+			if (not ActiveConnections.sprintWalk or not ActiveConnections.sprintWalk.Connected) then
+				ActiveConnections.sprintWalk = Sprinting.Changed:Connect(function()
+					Sprinting.Value = false
+				end)
+			end
+		else
+			if (ActiveConnections.sprintWalk and ActiveConnections.sprintWalk.Connected) then
+				ActiveConnections.sprintWalk:Disconnect()
+			end
 		end
 	end
 
