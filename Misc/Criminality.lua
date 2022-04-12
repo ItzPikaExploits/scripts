@@ -4,6 +4,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local UserInputService = game:GetService("UserInputService")
+local Replicated = game:GetService("ReplicatedStorage")
 
 local Player = Players.LocalPlayer
 local Mouse = Player:GetMouse()
@@ -22,6 +23,7 @@ FOVcircle.Visible = true
 FOVcircle.Filled = false
 
 local MouseConnections = {};
+local ActiveConnections = {};
 
 table.insert(MouseConnections, UserInputService.InputBegan:Connect(function(input, gpe)
 	if (gpe) then return end
@@ -48,9 +50,21 @@ function shared._unload()
 	if (shared._id) then
 		pcall(RunService.UnbindFromRenderStep, RunService, shared._id)
 	end
+
+	for _, c in pairs(MouseConnections) do
+		if (c.Connected) then
+			c:Disconnect()
+		end
+	end
+
+	for _, c in pairs(ActiveConnections) do
+		if (c.Connected) then
+			c:Disconnect()
+		end
+	end
 	
 	FOVcircle:Remove()
-	
+
 	if (library.open) then
 		library:Close()
 	end
@@ -83,11 +97,11 @@ RunService:BindToRenderStep(shared._id, 1, function()
 				local worldPoint = head.Position;
 				local vector, onScreen = Camera:WorldToScreenPoint(worldPoint)
 				local screenPoint = Vector2.new(vector.X, vector.Y)
-				
+
 				if (not onScreen) then continue end
-				
+
 				local magn = (screenPoint - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
-				
+
 				if (magn < library.flags.fovSize) then
 					if (library.flags.wallCheck) then
 						local rayOrigin = Camera.CFrame.Position
@@ -98,10 +112,10 @@ RunService:BindToRenderStep(shared._id, 1, function()
 						raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
 						raycastParams.IgnoreWater = true
 						local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
-						
+
 						if (raycastResult) then continue end
 					end
-					
+
 					if (not closest) or (closest and (magn < closestmag)) then
 						closest = char;
 						closestmag = magn;
@@ -112,7 +126,7 @@ RunService:BindToRenderStep(shared._id, 1, function()
 		if (closest and Player.Character) then
 			local head = closest:FindFirstChild("Head")
 			local hrp = closest:FindFirstChild("HumanoidRootPart")
-			
+
 			local RootPart = Player.Character:FindFirstChild("HumanoidRootPart")
 			if (head and hrp) then
 				local magn = (RootPart.Position - hrp.Position).Magnitude;
@@ -121,7 +135,7 @@ RunService:BindToRenderStep(shared._id, 1, function()
 			end
 		end
 	end
-	
+
 	FOVcircle.Visible = library.flags.fovCircle;
 	FOVcircle.Color = (library.flags.fovJeb_ and Color3.fromHSV(HUE/360, 1, 1) or Color3.new(1, 1, 1))
 	FOVcircle.Position = Vector2.new(Mouse.X, Mouse.Y + 40)
@@ -136,7 +150,7 @@ RunService:BindToRenderStep(shared._id, 1, function()
 	if (HUE > 360) then HUE = 0; end
 end)
 
-local window = library:CreateWindow('Main') do
+local window = library:CreateWindow('Criminality') do
 	local folder = window:AddFolder('Aimlock') do
 		folder:AddToggle({ text = 'Enabled', flag = 'aimLock' })
 		folder:AddToggle({ text = 'Wall Check', flag = 'wallCheck' })
@@ -146,16 +160,28 @@ local window = library:CreateWindow('Main') do
 		folder:AddSlider({ text = 'FOV', flag = 'fovSize', min = 10, max = 180, value = 90 })
 		folder:AddToggle({ text = 'Rainbow FOV', flag = 'fovJeb_' })
 	end
+	local folder = window:AddFolder('Misc') do
+		folder:AddToggle({ text = 'Sprint Walk', flag = 'sprintWalk', callback = function()
+			if (library.flags.sprintWalk) then
+				local Sprinting = Replicated.CharStats[Player.Name].Sprinting;
+				ActiveConnections.SprintWalk = Sprinting.Changed:Connect(function()
+					Sprinting.Value = false;
+				end)
+			else
+				if (ActiveConnections.SprintWalk and ActiveConnections.SprintWalk.Connected) then
+					ActiveConnections.SprintWalk:Disconnect()
+				end
+			end
+		end})
+		folder:AddToggle({ text = 'Mouse Icon Enabled', flag = 'mouseIconEnabled', callback = function()
+			UserInputService.MouseIconEnabled = library.flags.mouseIconEnabled;
+		end})
+	end
 end
 
 local window = library:CreateWindow('Options & Credits') do
 	window:AddButton({ text = "Close", callback = function()
 		pcall(shared._unload)
-		for _, c in pairs(MouseConnections) do
-			if (c.Connected) then
-				c:Disconnect()
-			end
-		end
 	end})
 	window:AddLabel({ text = 'Whimsical - Scripting' })
 	window:AddLabel({ text = 'Jan - UI Library' })
