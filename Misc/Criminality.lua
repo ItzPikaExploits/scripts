@@ -134,6 +134,10 @@ RunService:BindToRenderStep(shared._id, 1, function()
 				Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
 			end
 		end
+		if (library.flags.sprintWalk) then
+			local Sprinting = Replicated.CharStats[Player.Name].Sprinting;
+			Sprinting.Value = false;
+		end
 	end
 
 	FOVcircle.Visible = library.flags.fovCircle;
@@ -161,18 +165,7 @@ local window = library:CreateWindow('Criminality') do
 		folder:AddToggle({ text = 'Rainbow FOV', flag = 'fovJeb_' })
 	end
 	local folder = window:AddFolder('Misc') do
-		folder:AddToggle({ text = 'Sprint Walk', flag = 'sprintWalk', callback = function()
-			if (library.flags.sprintWalk) then
-				local Sprinting = Replicated.CharStats[Player.Name].Sprinting;
-				ActiveConnections.SprintWalk = Sprinting.Changed:Connect(function()
-					Sprinting.Value = false;
-				end)
-			else
-				if (ActiveConnections.SprintWalk and ActiveConnections.SprintWalk.Connected) then
-					ActiveConnections.SprintWalk:Disconnect()
-				end
-			end
-		end})
+		folder:AddToggle({ text = 'Sprint Walk', flag = 'sprintWalk' })
 		folder:AddToggle({ text = 'Mouse Icon Enabled', flag = 'mouseIconEnabled', callback = function()
 			UserInputService.MouseIconEnabled = library.flags.mouseIconEnabled;
 		end})
