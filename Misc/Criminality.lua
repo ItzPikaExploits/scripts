@@ -131,7 +131,11 @@ RunService:BindToRenderStep(shared._id, 1, function()
 			if (head and hrp) then
 				local magn = (RootPart.Position - hrp.Position).Magnitude;
 				local distanceMultiplier = (magn / 100);
-				Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
+				if (not library.flags.smoothBot) then
+					Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
+				elseif (library.flags.smoothBot) then
+					Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier)), 0.3)
+				end
 			end
 		end
 	end
@@ -159,6 +163,7 @@ local window = library:CreateWindow('Criminality') do
 	local folder = window:AddFolder('Aimlock') do
 		folder:AddToggle({ text = 'Enabled', flag = 'aimLock' })
 		folder:AddToggle({ text = 'Wall Check', flag = 'wallCheck' })
+		folder:AddToggle({ text = 'Smooth', flag = 'smoothBot' })
 
 		folder:AddToggle({ text = 'FOV Circle', flag = 'fovCircle' })
 		folder:AddSlider({ text = 'FOV Circle Sides', flag = 'fovSides', min = 10, max = 100, value = 50 })
