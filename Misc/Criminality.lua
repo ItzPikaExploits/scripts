@@ -108,12 +108,12 @@ RunService:BindToRenderStep(shared._id, 1, function()
 						local rayDirection = (head.Position - Camera.CFrame.Position).Magnitude * (head.Position - Camera.CFrame.Position).Unit
 
 						local raycastParams = RaycastParams.new()
-						raycastParams.FilterDescendantsInstances = {Player.Character, char}
+						raycastParams.FilterDescendantsInstances = {Player.Character, char, workspace.Camera}
 						raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
 						raycastParams.IgnoreWater = true
 						local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
 
-						if (raycastResult) then print(raycastResult.Instance:GetFullName()) continue end
+						if (raycastResult) then continue end
 					end
 
 					if (not closest) or (closest and (magn < closestmag)) then
