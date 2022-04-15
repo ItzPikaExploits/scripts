@@ -113,7 +113,7 @@ RunService:BindToRenderStep(shared._id, 1, function()
 						raycastParams.IgnoreWater = true
 						local raycastResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
 
-						if (raycastResult) then continue end
+						if (raycastResult) then print(raycastResult.Instance:GetFullName()) continue end
 					end
 
 					if (not closest) or (closest and (magn < closestmag)) then
