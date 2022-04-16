@@ -87,8 +87,9 @@ end
 shared._id = HttpService:GenerateGUID(false);
 
 local HUE = 0;
+local LossTimer = 0;
 
-RunService:BindToRenderStep(shared._id, 1, function()
+RunService:BindToRenderStep(shared._id, 1, function(dt)
 	if (library.flags.aimLock and LOCKING) then
 		local closest, closestmag = nil, nil;
 		for _, char in pairs(GetCharacters()) do
@@ -131,11 +132,23 @@ RunService:BindToRenderStep(shared._id, 1, function()
 			if (head and hrp) then
 				local magn = (RootPart.Position - hrp.Position).Magnitude;
 				local distanceMultiplier = (magn / 100);
-				if (not library.flags.smoothBot) then
-					Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
-				elseif (library.flags.smoothBot) then
-					Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier)), 0.3)
-				end
+				coroutine.wrap(function()
+					if (library.flags.lossyAim) then
+						if (LossTimer > 0) then
+							LossTimer -= dt;
+							return
+						else
+							if (math.random(0, 10) == 1) then
+								LossTimer = math.random(10, 100)/1000
+							end
+						end
+					end
+					if (not library.flags.smoothBot) then
+						Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
+					elseif (library.flags.smoothBot) then
+						Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier)), 0.3)
+					end
+				end)()
 			end
 		end
 	end
@@ -164,6 +177,7 @@ local window = library:CreateWindow('Criminality') do
 		folder:AddToggle({ text = 'Enabled', flag = 'aimLock' })
 		folder:AddToggle({ text = 'Wall Check', flag = 'wallCheck' })
 		folder:AddToggle({ text = 'Smooth', flag = 'smoothBot' })
+		folder:AddToggle({ text = 'Lossy (smooth suggested)', flag = 'lossyAim' })
 
 		folder:AddToggle({ text = 'FOV Circle', flag = 'fovCircle' })
 		folder:AddSlider({ text = 'FOV Circle Sides', flag = 'fovSides', min = 10, max = 100, value = 50 })
