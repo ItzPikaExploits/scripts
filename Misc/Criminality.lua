@@ -177,7 +177,7 @@ local window = library:CreateWindow('Criminality') do
 		folder:AddToggle({ text = 'Enabled', flag = 'aimLock' })
 		folder:AddToggle({ text = 'Wall Check', flag = 'wallCheck' })
 		folder:AddToggle({ text = 'Smooth', flag = 'smoothBot' })
-		folder:AddToggle({ text = 'Lossy (smooth suggested)', flag = 'lossyAim' })
+		folder:AddToggle({ text = 'Lossy (smooth recc.)', flag = 'lossyAim' })
 
 		folder:AddToggle({ text = 'FOV Circle', flag = 'fovCircle' })
 		folder:AddSlider({ text = 'FOV Circle Sides', flag = 'fovSides', min = 10, max = 100, value = 50 })
