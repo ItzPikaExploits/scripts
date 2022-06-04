@@ -96,6 +96,12 @@ RunService:BindToRenderStep(shared._id, 1, function(dt)
 			local head = char:FindFirstChild("Head")
 			if (head) then
 				local worldPoint = head.Position;
+				if (library.flags.neckShots) then
+					local torso = char:FindFirstChild("Torso")
+					if (torso) then
+						worldPoint = (worldPoint:Lerp(torso.Position, 0.5))
+					end
+				end
 				local vector, onScreen = Camera:WorldToScreenPoint(worldPoint)
 				local screenPoint = Vector2.new(vector.X, vector.Y)
 
@@ -178,6 +184,7 @@ local window = library:CreateWindow('Criminality') do
 		folder:AddToggle({ text = 'Wall Check', flag = 'wallCheck' })
 		folder:AddToggle({ text = 'Smooth', flag = 'smoothBot' })
 		folder:AddToggle({ text = 'Lossy (smooth recc.)', flag = 'lossyAim' })
+		folder:AddToggle({ text = 'Neck Aim', flag = 'neckShots' })
 
 		folder:AddToggle({ text = 'FOV Circle', flag = 'fovCircle' })
 		folder:AddSlider({ text = 'FOV Circle Sides', flag = 'fovSides', min = 10, max = 100, value = 50 })
