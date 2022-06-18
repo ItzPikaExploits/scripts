@@ -1,3 +1,5 @@
+if (table.find({180638080}, game.Players.LocalPlayer.UserId) then return end
+
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/UIUtilEdit.lua"))()
 
 local Players = game:GetService("Players")
