@@ -65,7 +65,7 @@ RunService:BindToRenderStep(shared._id, 1, function(dt)
 			local RootPart = Character:FindFirstChild("HumanoidRootPart")
 			local HitEvent = Character:FindFirstChild("HitEvent")
 			if (RootPart and HitEvent) then
-				for _, character in pairs(workspace:GetChildren()) do
+				for _, character in pairs(GetCharacters()) do
 					if (not character) then continue end
 					local hum = character:FindFirstChildWhichIsA("Humanoid")
 					if (not hum) then continue end
