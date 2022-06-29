@@ -40,7 +40,7 @@ if (_G.eaAuto) then
                             if (Backpack and Backpack:FindFirstChild(_G.eaAC_config.Move)) then
                                 Tool = Backpack[_G.eaAC_config.Move];
                                 Humanoid:EquipTool(Tool);
-                                task.wait(1)
+                                task.wait(_G.eaAC_config.HoldTime)
                             end
                         end
                         if (Tool) then
