@@ -1,4 +1,4 @@
--- elemental awakening
+-- elemental awakening auto clicker
 -- made by whimsical
 
 local Players = game:GetService("Players")
