@@ -9,6 +9,8 @@ local StarterGui = game:GetService("StarterGui")
 
 local Player = Players.LocalPlayer;
 
+local GC = getconnections or get_signal_cons
+
 local MouseConnections = {};
 
 table.insert(MouseConnections, UserInputService.InputBegan:Connect(function(input, gpe)
@@ -108,7 +110,7 @@ RunService:BindToRenderStep(shared._id, 1, function(dt)
                 if (ScreenGui.Name == "ScreenGui" and ScreenGui:FindFirstChild("Start")) then
                     local Play = ScreenGui.Start:FindFirstChild("PlayButton")
                     if (Play) then
-                        for _, c in pairs(getconnections(Play.MouseButton1Click)) do
+                        for _, c in pairs(GC(Play.MouseButton1Click)) do
                             c.Function()
                         end
                     end
@@ -181,6 +183,23 @@ local window = library:CreateWindow("Elemental Awakening") do
 end
 
 local window = library:CreateWindow("Options & Credits") do
+	window:AddButton({ text = "Anti-Idle", callback = function()
+        if GC then
+            for i, v in pairs(GC(Player.Idled)) do -- ty infinite yield <3
+                if v["Disable"] then
+                    v["Disable"](v)
+                elseif v["Disconnect"] then
+                    v["Disconnect"](v)
+                end
+            end
+        else
+            Player.Idled:Connect(function()
+                VirtualUser:CaptureController()
+                VirtualUser:ClickButton2(Vector2.new())
+            end)
+        end
+        Notify("Anti-idle has been enabled.")
+	end})
 	window:AddButton({ text = "Close", callback = function()
 		pcall(shared._unload)
 	end})
