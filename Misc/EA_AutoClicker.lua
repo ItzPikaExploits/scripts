@@ -20,12 +20,14 @@ if (_G.eaAuto) then
             local lastuse = 0;
             while (_G.eaAuto) do
                 local Character, PlayerGui, Backpack = Player.Character, Player.PlayerGui, Player.Backpack;
-                if (PlayerGui and PlayerGui:FindFirstChild("ScreenGui")) then
-                    if (PlayerGui.ScreenGui:FindFirstChild("Start")) then
-                        local Play = PlayerGui.ScreenGui.Start:FindFirstChild("PlayButton")
-                        if (Play) then
-                            for _, c in pairs(getconnections(Play.MouseButton1Click)) do
-                                c.Function()
+                if (PlayerGui) then
+                    for _, ScreenGui in pairs(PlayerGui:GetChildren()) do
+                        if (ScreenGui.Name == "ScreenGui" and ScreenGui:FindFirstChild("Start")) then
+                            local Play = ScreenGui.Start:FindFirstChild("PlayButton")
+                            if (Play) then
+                                for _, c in pairs(getconnections(Play.MouseButton1Click)) do
+                                    c.Function()
+                                end
                             end
                         end
                     end
