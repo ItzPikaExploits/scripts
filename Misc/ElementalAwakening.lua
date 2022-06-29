@@ -132,7 +132,7 @@ RunService:BindToRenderStep(shared._id, 1, function(dt)
                     Tool:Activate()
                     task.wait(library.flags.afHoldTime)
                     Tool:Deactivate()
-                    lastuse = tick()
+                    lastmoveuse = tick()
                 end
             end
         end
