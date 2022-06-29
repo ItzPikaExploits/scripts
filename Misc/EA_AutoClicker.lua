@@ -17,6 +17,7 @@ end
 if (_G.eaAuto) then
     if (typeof(_G.eaAC_config) ~= "table") then
         Notify("Unable to find configuration.", 5)
+        return;
     end
     coroutine.wrap(function()
         xpcall(function()
