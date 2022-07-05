@@ -15,6 +15,8 @@ local Camera = workspace.CurrentCamera
 
 local MouseConnections = {};
 
+local Mouse1Down = false;
+
 table.insert(MouseConnections, UserInputService.InputBegan:Connect(function(input, gpe)
 	if (gpe) then return end
 	if (input.UserInputType == Enum.UserInputType.Keyboard) then
@@ -22,6 +24,15 @@ table.insert(MouseConnections, UserInputService.InputBegan:Connect(function(inpu
 		if (KeyCode == Enum.KeyCode.End) then
 			library:Close()
 		end
+	elseif (input.UserInputType == Enum.UserInputType.MouseButton1) then
+		Mouse1Down = true;
+	end
+end))
+
+table.insert(MouseConnections, UserInputService.InputEnded:Connect(function(input, gpe)
+	if (gpe) then return end
+	if (input.UserInputType == Enum.UserInputType.MouseButton1) then
+		Mouse1Down = false;
 	end
 end))
 
@@ -60,24 +71,26 @@ shared._id = HttpService:GenerateGUID(false);
 
 RunService:BindToRenderStep(shared._id, 1, function(dt)
 	if (library.flags.killAura) then
-        local Character = Player.Character;
-        if (Character) then
-			local RootPart = Character:FindFirstChild("HumanoidRootPart")
-			local HitEvent = Character:FindFirstChild("HitEvent")
-			if (RootPart and HitEvent) then
-				for _, character in pairs(GetCharacters()) do
-					if (not character) then continue end
-					local hum = character:FindFirstChildWhichIsA("Humanoid")
-					if (not hum) then continue end
-					local root = character:FindFirstChild("HumanoidRootPart")
-					if (not root) then continue end
-					if ((root.Position - RootPart.Position).Magnitude <= (library.flags.kaRange or 5)) then
-						HitEvent:FireServer(hum, 0, 0)
+		if (not library.flags.auraClick) or (library.flags.auraClick and Mouse1Down) then
+        		local Character = Player.Character;
+	        	if (Character) then
+				local RootPart = Character:FindFirstChild("HumanoidRootPart")
+				local HitEvent = Character:FindFirstChild("HitEvent")
+				if (RootPart and HitEvent) then
+					for _, character in pairs(GetCharacters()) do
+						if (not character) then continue end
+						local hum = character:FindFirstChildWhichIsA("Humanoid")
+						if (not hum) then continue end
+						local root = character:FindFirstChild("HumanoidRootPart")
+						if (not root) then continue end
+						if ((root.Position - RootPart.Position).Magnitude <= (library.flags.kaRange or 5)) then
+							HitEvent:FireServer(hum, 0, 0)
+						end
 					end
 				end
 			end
 		end
-    end
+	end
 	if (library.flags.dashToggle) then
 		local RootPart = Player.Character.HumanoidRootPart
 		if (UserInputService:IsKeyDown(library.flags.dashBind)) then
@@ -89,6 +102,7 @@ end)
 local window = library:CreateWindow("Criminality") do
 	local folder = window:AddFolder("Combat") do
 		folder:AddToggle({ text = "Kill Aura", flag = "killAura" })
+		folder:AddToggle({ text = "Only While Clicking", flag = "auraClick" })
 		folder:AddSlider({ text = "Range", flag = "kaRange", min = 5, max = 100, value = 8 })
 	end
 	local folder = window:AddFolder("Events") do
