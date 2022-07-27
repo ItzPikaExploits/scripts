@@ -141,23 +141,23 @@ end
 shared._id = game:GetService('HttpService'):GenerateGUID(false)
 runService:BindToRenderStep(shared._id, 1, function()
 	if (not library.flags.autoPlayer) then return end
-    if typeof(framework.SongPlayer.CurrentlyPlaying) ~= 'Instance' then return end
-    if framework.SongPlayer.CurrentlyPlaying.ClassName ~= 'Sound' then return end
+    if (typeof(framework.SongPlayer.CurrentlyPlaying) ~= 'Instance') then return end
+    if (framework.SongPlayer.CurrentlyPlaying.ClassName ~= 'Sound') then return end
 
-    local arrows = {}
-    for _, obj in next, framework.UI.ActiveSections do
-        arrows[#arrows + 1] = obj;
-    end
+    local arrows = framework.UI:GetNotes()
 
     local count = framework.SongPlayer:GetKeyCount()
     local mode = count .. 'Key'
 
     local arrowData = framework.ArrowData[mode].Arrows
 
-    for i = 1, #arrows do
-        local arrow = arrows[i]
-		if type(arrow) ~= 'table' or (type(arrow.NoteDataConfigs) == 'table' and arrow.NoteDataConfigs.Type == 'Death') then
-			continue;
+    local arrowData = framework.ArrowData[mode].Arrows
+    for i, arrow in next, arrows do
+        local ignoredNoteTypes = { Death = true, Mechanic = true, Poison = true }
+		if (typeof(arrow.NoteDataConfigs) == 'table') then
+		    if (ignoredNoteTypes[arrow.NoteDataConfigs.Type]) then
+		        continue;
+		    end
 		end
 
 		if (arrow.Side == framework.UI.CurrentSide) and (not arrow.Marked) and framework.SongPlayer.CurrentlyPlaying.TimePosition > 0 then 
