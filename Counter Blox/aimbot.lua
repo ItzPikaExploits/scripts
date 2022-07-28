@@ -16,7 +16,7 @@ local timetaken = 0;
 local TeamIgnore = {
 	["Counter-Terrorists"] = {"TTT", "Counter-Terrorists"},
 	["Terrorists"] = {"TTT", "Terrorists"},
-	["TTT"] = {"Counter-Terrorists", "Terrorists"},
+	["TTT"] = {"TTT", "Counter-Terrorists", "Terrorists"},
 };
 
 function getPlayerFromChar(char)
