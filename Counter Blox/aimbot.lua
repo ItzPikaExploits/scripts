@@ -1,4 +1,4 @@
--- cs prison life: aimbot
+-- counter blox remastered: aimbot
 -- whims_ical
 
 local Players = game:GetService("Players")
