@@ -1,5 +1,5 @@
 -- counter blox remastered: aimbot
--- whims_ical
+-- Valerie!
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
