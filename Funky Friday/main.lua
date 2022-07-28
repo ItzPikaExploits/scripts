@@ -214,30 +214,30 @@ runService:BindToRenderStep(shared._id, 1, function()
 	end
 end)
 
-local uiToggle = userInputService.InputBegan:Connect(function(Input)
-    if (Input.UserInputType == Enum.UserInputType.Keyboard) then
-        local KeyCode = Input.KeyCode;
-        if (KeyCode == Enum.KeyCode.RightControl) then
-            library:Close()
-        end
-    end
-end)
+local apInfo = { text = 'Enabled', flag = 'autoPlayer', callback = function()
+    if (not library.flags.apFace) then return end
+    local plr = game:GetService("Players").LocalPlayer;
+    local char = plr.Character;
+    char.Head.face.Texture = (library.flags.autoPlayer and "rbxassetid://22828283" or "rbxassetid://236455674");
+end };
 
 local window = library:CreateWindow('Main') do
 	local folder = window:AddFolder('Autoplayer') do
-		folder:AddToggle({ text = 'Enabled', flag = 'autoPlayer' })
+		folder:AddToggle(apInfo)
 
 		folder:AddSlider({ text = 'Sick %', flag = 'sickChance', min = 0, max = 100, value = 100 })
 		folder:AddSlider({ text = 'Good %', flag = 'goodChance', min = 0, max = 100, value = 0 })
 		folder:AddSlider({ text = 'Ok %', flag = 'okChance', min = 0, max = 100, value = 0 })
 		folder:AddSlider({ text = 'Bad %', flag = 'badChance', min = 0, max = 100, value = 0 })
 		folder:AddSlider({ text = 'Sustain (ms)', flag = 'sustainLength', min = 0, max = 100, value = 25 })
+        
+        folder:AddToggle({ text = 'Autoplayer Faces', flag = 'apFace', state = true })
 	end
 	local folder = window:AddFolder('Other') do
 		local instantStagePromptsCB = nil;
 		folder:AddButton({ text = 'Instant Stage Prompts', callback = function()
 			if (not instantStagePromptsCB) then
-				function CheckInstance(d)
+				local function CheckInstance(d)
 					if (d:IsA("ProximityPrompt") and d.HoldDuration > 0) then
 						d.HoldDuration = 0;
 					end
@@ -250,6 +250,17 @@ local window = library:CreateWindow('Main') do
 		end})
 	end
 end
+
+local uiToggle = userInputService.InputBegan:Connect(function(Input)
+    if (Input.UserInputType == Enum.UserInputType.Keyboard) then
+        local KeyCode = Input.KeyCode;
+        if (KeyCode == Enum.KeyCode.End) then
+            library:Close()
+        elseif (KeyCode == Enum.KeyCode.RightControl) then
+            apInfo:SetState(not library.flags.autoPlayer)
+        end
+    end
+end)
 
 local window = library:CreateWindow('Options & Credits') do
 	window:AddButton({ text = "Close", callback = function()
