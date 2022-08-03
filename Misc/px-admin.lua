@@ -11,13 +11,18 @@ local UserInputService = game:GetService("UserInputService");
 -- Constants --
 local Open = false;
 local Hidden = false;
+local synapsis = syn;
 
 -- Variables --
 local Player = Players.LocalPlayer;
+local Parent = Player.PlayerGui;
 
 -- Objects --
+if (synapsis) then Parent = game:GetService("CoreGui") end
+if (Parent:FindFirstChild("px-admin_instance")) then Parent["px-admin_instance"]:Destroy() end
+
 local gui = Instance.new("ScreenGui")
-gui.Name = "gui"
+gui.Name = "px-admin_instance"
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 local mainFrame = Instance.new("Frame")
@@ -99,13 +104,7 @@ uIListLayout.Parent = notifications
 notifications.Parent = gui
 mainFrame.Parent = gui
 
-local synapsis = syn;
-
-local Parent = Player.PlayerGui;
-if (synapsis) then
-	synapsis.protect_gui(gui);
-	Parent = game:GetService("CoreGui")
-end
+if (synapsis) then synapsis.protect_gui(gui); end
 
 gui.Parent = Parent;
 
@@ -118,8 +117,8 @@ local function GetPlayers(name: string)
 			if ((player == Player) and (name == "me")) or 
 				((player ~= Player) and (name == "others")) or
 				(name == "all") or
-				(string.sub(player.Name, 1, string.len(name)) == string.lower(name)) or
-				(string.sub(player.DisplayName, 1, string.len(name)) == string.lower(name)) then
+				(string.lower(string.sub(player.Name, 1, string.len(name))) == string.lower(name)) or
+				(string.lower(string.sub(player.DisplayName, 1, string.len(name))) == string.lower(name)) then
 
 				table.insert(players, player)
 			end
