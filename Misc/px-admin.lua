@@ -135,7 +135,7 @@ end
 --<> Data <>--
 local Table = {};
 
-function Table.Arrayify(t: {})
+function Table.Arrayify(t)
 	local n = {};
 	for _, v in pairs(t) do
 		table.insert(n, v)
@@ -143,7 +143,7 @@ function Table.Arrayify(t: {})
 	return n;
 end
 
-function stringCombineAfterIndex(a: {}, combiner: string)
+function stringCombineAfterIndex(a, combiner: string)
 	local n = "";
 	local combiner = (combiner or "");
 	for i, v in pairs(a) do
@@ -155,7 +155,7 @@ end
 --<> Commands <>--
 local cmds = {commands={}};
 
-function cmds.addCommand(name: string, description: string, arguments: {}, commandFunction: any, aliases: {})
+function cmds.addCommand(name: string, description: string, arguments, commandFunction: any, aliases)
 	cmds.commands[name] = {
 		description = description,
 		arguments = arguments,
@@ -208,6 +208,10 @@ cmds.addCommand("getinventory", "Gets the items in a player's inventory.", {"<pl
 		end
 	end
 end, {"getinv", "viewinv", "viewbackpack"})
+
+cmds.addCommand("suicide", "Kill yourself.", nil, function(args)
+	Player.Character:FindFirstChildWhichIsA("Humanoid").Health = 0;
+end, {"killme", "selfdie", "sewerslide"})
 
 cmds.addCommand("hidepx", "Hides the px-admin ui.", nil, (function(args) Hidden = true; end), {"hidegui", "hideui"})
 cmds.addCommand("showpx", "Shows the px-admin ui.", nil, (function(args) Hidden = false; end), {"showgui", "showui"})
