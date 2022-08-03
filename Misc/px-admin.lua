@@ -330,6 +330,7 @@ function Parse(sent: string)
 end
 
 UserInputService.InputBegan:Connect(function(Input: InputObject, gpe: boolean)
+	if (not gui:IsDescendantOf(Parent)) then return end
 	if (gpe) then return end
 	if (Input.UserInputType == Enum.UserInputType.Keyboard) then
 		local KeyCode = Input.KeyCode;
