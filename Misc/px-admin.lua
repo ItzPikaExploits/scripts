@@ -83,6 +83,9 @@ command.Parent = mainFrame
 
 local uiListLayout = Instance.new("UIListLayout", container)
 uiListLayout.Padding = UDim.new(0, 5)
+uiListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	container.CanvasSize = UDim2.new(0, 0, 0, uiListLayout.AbsoluteContentSize.Y)
+end)
 
 local notifications = Instance.new("Frame")
 notifications.Name = "notifications"
