@@ -33,17 +33,11 @@ SpawnedItems.ChildAdded:Connect(TrackItem);
 
 RunService.RenderStepped:Connect(function()
     for t, info in pairs(TrackedItems) do
-        local handle = t:FindFirstChildWhichIsA("BasePart") or t:FindFirstChildWhichIsA("Attachment") or t:FindFirstChildWhichIsA("BillboardGui");
+        local handle = t:FindFirstChildWhichIsA("BasePart") or t:FindFirstChildWhichIsA("Attachment");
         if (not handle) then continue; end
         
         local Label = info[1];
-        local Position = nil;
-        
-        if (handle:IsA("BillboardGui")) then
-            continue;
-        else
-            Position = handle.Position;
-        end
+        local Position = handle.Position;
         
         local vector, onScreen = Camera:WorldToScreenPoint(Position)
         local screenPoint = Vector2.new(vector.X, vector.Y)
