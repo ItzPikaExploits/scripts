@@ -39,6 +39,12 @@ RunService.RenderStepped:Connect(function()
         local Label = info[1];
         local Position = nil;
         
+        if (handle:IsA("BillboardGui")) then
+            continue;
+        else
+            Position = handle.Position;
+        end
+        
         local vector, onScreen = Camera:WorldToScreenPoint(Position)
         local screenPoint = Vector2.new(vector.X, vector.Y)
         Label.Position = screenPoint;
