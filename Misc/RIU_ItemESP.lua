@@ -38,6 +38,10 @@ RunService.RenderStepped:Connect(function()
         
         local Label = info[1];
         local Position = handle.Position;
+            
+        if (handle:IsA("Attachment")) then
+            Position = handle.WorldPosition;
+        end
         
         local vector, onScreen = Camera:WorldToScreenPoint(Position)
         local screenPoint = Vector2.new(vector.X, vector.Y)
