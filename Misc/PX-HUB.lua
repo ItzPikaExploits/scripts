@@ -34,11 +34,11 @@ local scripts = {
 	},
 	["Criminality"] = {
 		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Misc/Criminality.lua",
-		[2] = "A script that contains strong aimbot functionality, with movement prediction.",
+		[2] = "A script that contains strong aimbot functionality, with movement prediction for Criminality.",
 	},
 	["Elemental Awakening"] = {
 		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Misc/ElementalAwakening.lua",
-		[2] = "A script that contains great functions, such as autofarm and auto element rolling.",
+		[2] = "A script that contains great functions, such as autofarm and auto element rolling in Elemental Awakening.",
 	},
 	["px-commandline"] = {
 		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Misc/px-commandline.lua",
@@ -46,7 +46,11 @@ local scripts = {
 	},
 	["Ability Wars"] = {
 		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Misc/AbilityWars.lua",
-		[2] = "A script that contains functions like attack aura and quicker movement.",
+		[2] = "A script that contains functions like attack aura and quicker movement for Ability Wars.",
+	},
+	["Nightmare's UI (Outlaster)"] = {
+		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Outlaster/Nightmare's%20UI.lua",
+		[2] = "A script that contains helpful functions like searching for advantage hints in Outlaster.",
 	},
 };
 
