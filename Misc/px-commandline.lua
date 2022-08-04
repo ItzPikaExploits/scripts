@@ -1,5 +1,5 @@
 --[[
-	px-admin
+	px-commandline
 	made by whimsical
 --]]
 -- Services --
@@ -19,10 +19,10 @@ local Parent = Player.PlayerGui;
 
 -- Objects --
 if (synapsis) then Parent = game:GetService("CoreGui") end
-if (Parent:FindFirstChild("px-admin_instance")) then Parent["px-admin_instance"]:Destroy() end
+if (Parent:FindFirstChild("px-commandline_instance")) then Parent["px-commandline_instance"]:Destroy() end
 
 local gui = Instance.new("ScreenGui")
-gui.Name = "px-admin_instance"
+gui.Name = "px-commandline_instance"
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 local mainFrame = Instance.new("Frame")
@@ -46,7 +46,7 @@ topbar.Size = UDim2.new(1, 6, 0, 25)
 local title = Instance.new("TextLabel")
 title.Name = "title"
 title.Font = Enum.Font.Gotham
-title.Text = "px-admin"
+title.Text = "px-commandline"
 title.TextColor3 = Color3.fromRGB(0, 0, 0)
 title.TextSize = 18
 title.TextXAlignment = Enum.TextXAlignment.Left
@@ -219,8 +219,8 @@ cmds.addCommand("suicide", "Kill yourself.", nil, function(args)
 	Player.Character:FindFirstChildWhichIsA("Humanoid").Health = 0;
 end, {"killme", "selfdie", "sewerslide"})
 
-cmds.addCommand("hidepx", "Hides the px-admin ui.", nil, (function(args) Hidden = true; end), {"hidegui", "hideui"})
-cmds.addCommand("showpx", "Shows the px-admin ui.", nil, (function(args) Hidden = false; end), {"showgui", "showui"})
+cmds.addCommand("hidepx", "Hides the px-commandline ui.", nil, (function(args) Hidden = true; end), {"hidegui", "hideui"})
+cmds.addCommand("showpx", "Shows the px-commandline ui.", nil, (function(args) Hidden = false; end), {"showgui", "showui"})
 
 local storedlabels = {};
 
