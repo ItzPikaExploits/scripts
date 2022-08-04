@@ -208,6 +208,10 @@ cmds.addCommand("getinventory", "Gets the items in a player's inventory.", {"<pl
 	end
 end, {"getinv", "viewinv", "viewbackpack"})
 
+cmds.addCommand("upfling", "Fling yourself upwards.", nil, function(args)
+	Player.Character.HumanoidRootPart.Velocity = Vector3.new(0, tonumber(args[1]) or 50, 0)
+end)
+
 cmds.addCommand("suicide", "Kill yourself.", nil, function(args)
 	Player.Character:FindFirstChildWhichIsA("Humanoid").Health = 0;
 end, {"killme", "selfdie", "sewerslide"})
