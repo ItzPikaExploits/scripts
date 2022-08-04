@@ -52,6 +52,10 @@ local scripts = {
 		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Outlaster/Nightmare's%20UI.lua",
 		[2] = "A script that contains helpful functions like searching for advantage hints in Outlaster.",
 	},
+	["Item ESP (Roblox Is Unbreakable"] = {
+		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Misc/RIU_ItemESP.lua",
+		[2] = "An script that contains ESP for items in Roblox is Unbreakable.",
+	},
 };
 
 -- Variables --
