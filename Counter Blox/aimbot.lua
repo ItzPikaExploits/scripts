@@ -55,7 +55,7 @@ UserInputService.InputBegan:Connect(function(Input)
 	if (Input.UserInputType == Enum.UserInputType.MouseButton2) then
 		lock = true
 		timetaken = 0;
-		timetotake = math.random(9, 15)/10;
+		timetotake = math.random(10, 15)/10;
 		offset = Vector3.new(math.random(-4, 4)/10, math.random(-4, 4)/10, math.random(-4, 4)/10);
 		curveOffset = Vector3.new(0, math.random(-10, 10)/10, 0);
 	end
