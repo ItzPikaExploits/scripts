@@ -8,7 +8,7 @@
     Edit the "keeplist" below to your needs.
 --]]
 
-local keeplist = { 
+_G.keeplist = _G.keeplist or { 
     "Supreme",
     "Mythic",
     "Legendary",
@@ -47,7 +47,7 @@ if (not _G.spinning) then
                 Text = "Spun for ".. clan,
             });
             Player.PlayerGui.Customization.Spin.Holder.TextLabel.Text = clan;
-            if (table.find(keeplist, rarity)) then
+            if (table.find(_G.keeplist, rarity)) then
                 break;
             end
         else
