@@ -59,6 +59,7 @@ if (not _G.spinning) then
         end
         task.wait(0.25)
     end
+    _G.spinning = false;
 elseif (_G.spinning) then
     _G.spinning = false;
 end
