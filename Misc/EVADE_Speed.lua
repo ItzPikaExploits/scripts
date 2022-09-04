@@ -27,7 +27,7 @@ table.insert(_G.evade_data, UserInputService.InputBegan:Connect(function(input, 
     if (input.UserInputType == Enum.UserInputType.Keyboard) then
         if (input.KeyCode == Enum.KeyCode.V) then
             local root = Player.Character:FindFirstChild("HumanoidRootPart")
-            root.CFrame += root.CFrame.LookVector * 50;
+            root.CFrame += root.CFrame.LookVector * 20;
             local sound = Instance.new("Sound");
             sound.SoundId = "rbxassetid://3763437293";
             sound.Volume = 1;
