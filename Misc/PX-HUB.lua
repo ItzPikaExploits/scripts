@@ -56,6 +56,10 @@ local scripts = {
 		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Misc/RIU_ItemESP.lua",
 		[2] = "An script that contains ESP for items in Roblox is Unbreakable.",
 	},
+	["Speed (EVADE)"] = {
+		[1] = "https://raw.githubusercontent.com/ItzPikaExploits/scripts/main/Misc/EVADE_Speed.lua",
+		[2] = "Can't stop the A-Train.",
+	},
 };
 
 -- Variables --
