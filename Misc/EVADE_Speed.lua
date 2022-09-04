@@ -1,6 +1,6 @@
-if (_G.olddash) then _G.olddash:Disconnect() end
+if (_G.oldspeed) then _G.oldspeed:Disconnect() end
 
-_G.olddash = game:GetService("RunService").Stepped:Connect(function()
+_G.oldspeed = game:GetService("RunService").Stepped:Connect(function()
     local root = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if (root ~= nil) then
          local newvel = root.Velocity/40;
