@@ -17,7 +17,7 @@ table.insert(_G.evade_data, RunService.Stepped:Connect(function()
     if (not char) then return end
     local root = char:FindFirstChild("HumanoidRootPart")
     if (root ~= nil) then
-         local newvel = root.Velocity/50;
+         local newvel = root.Velocity/45;
          root.CFrame += Vector3.new(newvel.X, 0, newvel.Z)
     end
 end))
