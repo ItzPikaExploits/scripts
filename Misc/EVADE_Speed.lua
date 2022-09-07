@@ -22,8 +22,12 @@ table.insert(_G.evade_data, RunService.Stepped:Connect(function()
     end
 end))
 
+local lastTP = tick();
+
 table.insert(_G.evade_data, RunService.RenderStepped:Connect(function(dt)
-    if (UserInputService:IsKeyDown(Enum.KeyCode.V)) and (not UserInputService:GetFocusedTextBox()) then
+    local now = tick();
+    if (UserInputService:IsKeyDown(Enum.KeyCode.V)) and (not UserInputService:GetFocusedTextBox()) and ((now - lastTP) > 0.01) then
+        lastTP = now;
         local root = Player.Character:FindFirstChild("HumanoidRootPart")
         root.CFrame += root.CFrame.LookVector * 10;
         local sound = Instance.new("Sound");
