@@ -37,10 +37,12 @@ local function TEclone(part, dt)
     coroutine.wrap(function()
         task.wait(dt)
         clone.Parent = workspace.CurrentCamera;
-        TweenService:Create(clone, TweenInfo.new(2), {
-            Transparency = 1
+        Debris:AddItem(clone, 1)
+        TweenService:Create(clone, TweenInfo.new(1), {
+            Transparency = 1,
+            CFrame = CFrame.new(clone.Position) * CFrame.Angles(math.rad(math.random(-180, 180)), math.rad(math.random(-180, 180)), math.rad(math.random(-180, 180))),
+            Size = Vector3.new()
         }):Play()
-        Debris:AddItem(clone, 2)
     end)()
 end
 
