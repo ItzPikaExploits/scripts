@@ -1,7 +1,8 @@
 local RunService = game:GetService("RunService");
 local UserInputService = game:GetService("UserInputService");
 local Players = game:GetService("Players");
-local Debris = game:GetService("Debris")
+local Debris = game:GetService("Debris");
+local TweenService = game:GetService("TweenService")
 
 local Player = Players.LocalPlayer;
 
@@ -24,9 +25,24 @@ end))
 
 local lastTP = tick();
 
+local function TEclone(part)
+    local clone = Instance.new("Part")
+    clone.Size = part.Size;
+    clone.Anchored = true
+    clone.CanCollide = false
+    clone.CFrame = part.CFrame;
+    clone.Color = part.Color
+    clone.Material = Enum.Material.Neon
+    clone.Parent = workspace.CurrentCamera;
+    TweenService:Create(clone, TweenInfo.new(2), {
+        Transparency = 1
+    }):Play()
+    Debris:AddItem(clone, 2)
+end
+
 table.insert(_G.evade_data, RunService.RenderStepped:Connect(function(dt)
     local now = tick();
-    if (UserInputService:IsKeyDown(Enum.KeyCode.V)) and (not UserInputService:GetFocusedTextBox()) and ((now - lastTP) > 0.01) then
+    if (UserInputService:IsKeyDown(Enum.KeyCode.V)) and (not UserInputService:GetFocusedTextBox()) and ((now - lastTP) > 0.03) then
         lastTP = now;
         local root = Player.Character:FindFirstChild("HumanoidRootPart")
         root.CFrame += root.CFrame.LookVector * 10;
@@ -37,5 +53,11 @@ table.insert(_G.evade_data, RunService.RenderStepped:Connect(function(dt)
         sound.Parent = root;
         sound:Play()
         Debris:AddItem(sound, 1);
+        for _, name in pairs({"Head", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "Torso"}) do
+            local part = Player.Character:FindFirstChild(name);
+            if (part ~= nil) then
+                TEclone(part)
+            end
+        end
     end
 end))
