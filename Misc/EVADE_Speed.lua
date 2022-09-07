@@ -22,19 +22,16 @@ table.insert(_G.evade_data, RunService.Stepped:Connect(function()
     end
 end))
 
-table.insert(_G.evade_data, UserInputService.InputBegan:Connect(function(input, gpe)
-    if (gpe) then return end
-    if (input.UserInputType == Enum.UserInputType.Keyboard) then
-        if (input.KeyCode == Enum.KeyCode.V) then
-            local root = Player.Character:FindFirstChild("HumanoidRootPart")
-            root.CFrame += root.CFrame.LookVector * 10;
-            local sound = Instance.new("Sound");
-            sound.SoundId = "rbxassetid://3763437293";
-            sound.Volume = 1;
-            sound.TimePosition = 0.815;
-            sound.Parent = root;
-            sound:Play()
-            Debris:AddItem(sound, 1);
-        end
+table.insert(_G.evade_data, RunService.RenderStepped:Connect(function(dt)
+    if (UserInputService:IsKeyDown(Enum.KeyCode.V)) and (not UserInputService:GetFocusedTextBox()) then
+        local root = Player.Character:FindFirstChild("HumanoidRootPart")
+        root.CFrame += root.CFrame.LookVector * 10;
+        local sound = Instance.new("Sound");
+        sound.SoundId = "rbxassetid://3763437293";
+        sound.Volume = 1;
+        sound.TimePosition = 0.815;
+        sound.Parent = root;
+        sound:Play()
+        Debris:AddItem(sound, 1);
     end
 end))
