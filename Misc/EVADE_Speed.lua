@@ -25,7 +25,7 @@ end))
 
 local lastTP = tick();
 
-local function TEclone(part)
+local function TEclone(part, dt)
     local clone = Instance.new("Part")
     clone.Size = part.Size;
     clone.Anchored = true
@@ -33,11 +33,14 @@ local function TEclone(part)
     clone.CFrame = part.CFrame;
     clone.Color = part.Color
     clone.Material = Enum.Material.Neon
-    clone.Parent = workspace.CurrentCamera;
-    TweenService:Create(clone, TweenInfo.new(2), {
-        Transparency = 1
-    }):Play()
-    Debris:AddItem(clone, 2)
+    coroutine.wrap(function()
+        task.wait(dt)
+        clone.Parent = workspace.CurrentCamera;
+        TweenService:Create(clone, TweenInfo.new(2), {
+            Transparency = 1
+        }):Play()
+        Debris:AddItem(clone, 2)
+    end)()
 end
 
 table.insert(_G.evade_data, RunService.RenderStepped:Connect(function(dt)
@@ -56,7 +59,7 @@ table.insert(_G.evade_data, RunService.RenderStepped:Connect(function(dt)
         for _, name in pairs({"Head", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "Torso"}) do
             local part = Player.Character:FindFirstChild(name);
             if (part ~= nil) then
-                TEclone(part)
+                TEclone(part, dt)
             end
         end
     end
