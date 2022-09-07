@@ -41,7 +41,7 @@ local function TEclone(part, dt)
         TweenService:Create(clone, TweenInfo.new(1), {
             Transparency = 1,
             CFrame = CFrame.new(clone.Position) * CFrame.Angles(math.rad(math.random(-180, 180)), math.rad(math.random(-180, 180)), math.rad(math.random(-180, 180))),
-            Size = Vector3.new()
+            Size = Vector3.new(0, 0, math.random(0, 5))
         }):Play()
     end)()
 end
