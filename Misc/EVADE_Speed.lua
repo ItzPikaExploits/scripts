@@ -32,6 +32,7 @@ local function TEclone(part, dt)
     clone.CanCollide = false
     clone.CFrame = part.CFrame;
     clone.Color = part.Color
+    clone.Transparency = 0.5;
     clone.Material = Enum.Material.Neon
     coroutine.wrap(function()
         task.wait(dt)
