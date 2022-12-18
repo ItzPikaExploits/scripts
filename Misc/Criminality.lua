@@ -149,11 +149,7 @@ RunService:BindToRenderStep(shared._id, 1, function(dt)
 							end
 						end
 					end
-					if (not library.flags.smoothBot) then
-						Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
-					elseif (library.flags.smoothBot) then
-						Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier)), 0.1)
-					end
+					Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier)), library.flags.smoothBot/10)
 				end)()
 			end
 		end
@@ -182,8 +178,8 @@ local window = library:CreateWindow('Criminality') do
 	local folder = window:AddFolder('Aimlock') do
 		folder:AddToggle({ text = 'Enabled', flag = 'aimLock' })
 		folder:AddToggle({ text = 'Wall Check', flag = 'wallCheck' })
-		folder:AddToggle({ text = 'Smooth', flag = 'smoothBot' })
-		folder:AddToggle({ text = 'Lossy (smooth recc.)', flag = 'lossyAim' })
+		folder:AddSlider({ text = 'Smoothing', flag = 'smoothBot', min = 1, max = 10, value = 3 })
+		folder:AddToggle({ text = 'Lossy', flag = 'lossyAim' })
 		folder:AddToggle({ text = 'Neck Aim', flag = 'neckShots' })
 
 		folder:AddToggle({ text = 'FOV Circle', flag = 'fovCircle' })
