@@ -152,7 +152,7 @@ RunService:BindToRenderStep(shared._id, 1, function(dt)
 					if (not library.flags.smoothBot) then
 						Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier))
 					elseif (library.flags.smoothBot) then
-						Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier)), 0.3)
+						Camera.CFrame = Camera.CFrame:lerp(CFrame.new(Camera.CFrame.Position, head.Position + ((hrp.Velocity/15) * distanceMultiplier)), 0.1)
 					end
 				end)()
 			end
